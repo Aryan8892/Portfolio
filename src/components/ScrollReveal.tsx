@@ -1,9 +1,5 @@
 
-import {
-  useEffect,
-  useRef,
-  type ReactNode,
-} from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 type ScrollRevealProps = {
   children: ReactNode;
@@ -18,28 +14,29 @@ export default function ScrollReveal({
   delay = 0,
   stagger = false,
 }: ScrollRevealProps) {
-  const elementRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const element = elementRef.current;
+    const element = ref.current;
     if (!element) return;
 
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      !("IntersectionObserver" in window)
-    ) {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
       element.classList.add("is-visible");
       return;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          element.classList.add("is-visible");
-          observer.unobserve(element);
-        }
+        element.classList.toggle("is-visible", entry.isIntersecting);
       },
-      { threshold: 0.08 }
+      {
+        threshold: 0,
+        rootMargin: "0px 0px -40px 0px",
+      }
     );
 
     observer.observe(element);
@@ -49,15 +46,17 @@ export default function ScrollReveal({
 
   return (
     <div
-      ref={elementRef}
-      className={`scroll-reveal w-full ${
-  stagger ? "scroll-reveal--stagger" : ""
-} ${className}`.trim()}
+      ref={ref}
+      className={[
+        "scroll-reveal",
+        stagger ? "scroll-reveal--stagger" : "",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
     </div>
   );
 }
-
-

@@ -1,12 +1,9 @@
 /* Scroll reveal animations */
+
 .scroll-reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition:
-    opacity 700ms ease,
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-  width: 100%;
+  transition: opacity 700ms ease, transform 700ms ease;
 }
 
 .scroll-reveal.is-visible {
@@ -15,13 +12,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-reveal {
+  .scroll-reveal,
+  .scroll-reveal.is-visible {
     opacity: 1;
     transform: none;
     transition: none;
-    will-change: auto;
   }
 }
+
+
 
 /* Individual project card animations */
 .scroll-reveal--stagger > .grid > * {
