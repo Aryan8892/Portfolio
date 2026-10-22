@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Terminal, Mail } from 'lucide-react';
+import { ArrowUp, Mail } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { GithubIcon, LinkedinIcon } from './Icons';
 
@@ -17,9 +17,11 @@ export const Footer: React.FC = () => {
           
           {/* Left Brand Identity */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-violet-600 flex items-center justify-center text-white shadow-md shadow-cyan-500/20">
-              <Terminal className="w-4 h-4 text-white" />
-            </div>
+            <img
+              src="/logo.png"
+              alt={`${personal.name} Logo`}
+              className="w-8 h-8 rounded-lg object-contain bg-black/40 border border-cyan-500/30 shadow-md shadow-cyan-500/20"
+            />
             <div>
               <div className="font-bold text-white text-sm">{personal.name}</div>
               <div className="text-[11px] text-slate-400 font-mono">B.Tech Computer Science &bull; SDE Aspirant</div>

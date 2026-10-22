@@ -41,15 +41,15 @@ export interface EducationItem {
 
 export const PORTFOLIO_DATA = {
   personal: {
-    name: "Aryan Sharma",
+    name: "Aryan Pandey",
     roleHeadline: "Aspiring Software Engineer & B.Tech Student",
     subheadline: "Specializing in Java, Data Structures & Algorithms, and Modern Web Applications",
     shortBio: "A dedicated B.Tech student with strong problem-solving skills and a passion for engineering scalable software solutions. Actively seeking Software Development Engineer (SDE) internships and graduate engineering roles where I can build reliable, impactful systems.",
     location: "India [Update City/State]",
     statusBadge: "Actively seeking 2026/2027 SDE Internships & Placements",
     email: "aryan.dev.contact@example.com", // Replace with your primary email
-    github: "https://github.com/aryansharma-dev", // Replace with your GitHub profile
-    linkedin: "https://linkedin.com/in/aryan-sharma-dev", // Replace with your LinkedIn profile
+    github: "https://github.com/aryanPandey-dev", // Replace with your GitHub profile
+    linkedin: "https://linkedin.com/in/aryan-Pandey-dev", // Replace with your LinkedIn profile
     resumeUrl: "/resume.pdf", // Path in public directory
     resumeLastUpdated: "Updated for 2026 Opportunities",
     stats: [
@@ -154,7 +154,7 @@ export const PORTFOLIO_DATA = {
       ],
       architectureOverview: "Frontend built with React and TypeScript communicating via RESTful endpoints to a modular backend service, backed by a normalized relational database schema for immutable complaint auditing.",
       metricsOrOutcome: "Simulated load testing demonstrated seamless handling of simultaneous complaint registrations with under 150ms average API response time.",
-      githubUrl: "https://github.com/aryansharma-dev/CivicTrust-Complaint-Portal",
+      githubUrl: "https://github.com/aryanPandey-dev/CivicTrust-Complaint-Portal",
       liveUrl: "https://civictrust-demo.example.com",
       isPrototypeOrHardware: false
     },
@@ -177,7 +177,7 @@ export const PORTFOLIO_DATA = {
       ],
       architectureOverview: "Analog sensor signals are digitized through ADC pins, evaluated against safety threshold algorithms on the MCU, which then toggles GPIO pins to switch high-power electromechanical relays.",
       metricsOrOutcome: "Sub-second (<800ms) detection-to-cutoff response latency achieved in prototype testing environments.",
-      githubUrl: "https://github.com/aryansharma-dev/Alcohol-Sensing-Engine-Cutoff",
+      githubUrl: "https://github.com/aryanPandey-dev/Alcohol-Sensing-Engine-Cutoff",
       isPrototypeOrHardware: true
     },
     {
@@ -199,7 +199,7 @@ export const PORTFOLIO_DATA = {
       ],
       architectureOverview: "Modular React component architecture utilizing strict TypeScript type contracts, centralized reducer-based state management, and optimized render cycles.",
       metricsOrOutcome: "100% client-side offline capability with zero layout shift (CLS < 0.01) and instant load times.",
-      githubUrl: "https://github.com/aryansharma-dev/SMART-WORK-HUB",
+      githubUrl: "https://github.com/aryanPandey-dev/SMART-WORK-HUB",
       liveUrl: "https://smart-work-hub-demo.example.com",
       isPrototypeOrHardware: false
     }
@@ -256,8 +256,8 @@ export const PORTFOLIO_DATA = {
     responseTime: "Typically replies within 24 hours",
     fields: {
       email: "aryan.dev.contact@example.com",
-      github: "https://github.com/aryansharma-dev",
-      linkedin: "https://linkedin.com/in/aryan-sharma-dev",
+      github: "https://github.com/aryanPandey-dev",
+      linkedin: "https://linkedin.com/in/aryan-Pandey-dev",
       location: "India [Open to Remote & Onsite]"
     }
   }

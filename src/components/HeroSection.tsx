@@ -18,7 +18,7 @@ export const HeroSection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
+
           {/* Left Column: Hero Text Content */}
           <div className="lg:col-span-7 flex flex-col items-start text-left z-10">
             {/* Pulsing Status Badge */}
@@ -71,7 +71,7 @@ export const HeroSection: React.FC = () => {
 
               <a
                 href={personal.resumeUrl}
-                download="Aryan_Sharma_Resume.pdf"
+                download="Aryan_Pandey_Resume.pdf"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/5 border border-white/15 hover:border-cyan-400/50 hover:bg-white/10 text-slate-200 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 group"
               >
                 <FileDown className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
@@ -121,7 +121,7 @@ export const HeroSection: React.FC = () => {
           <div className="lg:col-span-5 relative flex items-center justify-center">
             {/* Subtle glow circle behind 3D object */}
             <div className="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-cyan-500/20 to-violet-600/20 blur-3xl pointer-events-none" />
-            
+
             {/* 3D Interactive Canvas Component */}
             <div className="relative w-full aspect-square max-w-[460px] flex items-center justify-center">
               <Hero3DCanvas />

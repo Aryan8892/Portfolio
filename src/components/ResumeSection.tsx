@@ -9,7 +9,7 @@ export const ResumeSection: React.FC = () => {
   return (
     <section id="resume" className="py-24 relative overflow-hidden bg-[#07080d]/70">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-4">
@@ -46,7 +46,7 @@ export const ResumeSection: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
               <a
                 href={personal.resumeUrl}
-                download="Aryan_Sharma_Resume.pdf"
+                download="Aryan_Pandey_Resume.pdf"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-600 text-white font-semibold text-sm shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <Download className="w-4 h-4" />
@@ -172,7 +172,7 @@ export const ResumeSection: React.FC = () => {
             <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
               <a
                 href={personal.resumeUrl}
-                download="Aryan_Sharma_Resume.pdf"
+                download="Aryan_Pandey_Resume.pdf"
                 className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold"
               >
                 Download PDF Document

@@ -53,7 +53,7 @@ npm run preview
 ```text
 MyPortfolio/
 ├── public/
-│   ├── favicon.svg              # Dark-mode browser tab favicon
+│   ├── logo.png                 # Dark-mode browser tab logo
 │   └── resume.pdf               # Downloadable sample resume PDF
 ├── src/
 │   ├── assets/                  # Static assets & icons
@@ -91,10 +91,10 @@ Update the following keys to match your information:
 
 | Section | Field in `portfolioData.ts` | Current Placeholder Value | What to Enter |
 |---|---|---|---|
-| **Personal** | `personal.name` | `"Aryan Sharma"` | Your actual full name |
+| **Personal** | `personal.name` | `"Aryan Pandey"` | Your actual full name |
 | **Personal** | `personal.email` | `"aryan.dev.contact@example.com"` | Your active contact email |
-| **Personal** | `personal.github` | `"https://github.com/aryansharma-dev"` | Your GitHub profile link |
-| **Personal** | `personal.linkedin` | `"https://linkedin.com/in/aryan-sharma-dev"` | Your LinkedIn profile URL |
+| **Personal** | `personal.github` | `"https://github.com/aryanPandey-dev"` | Your GitHub profile link |
+| **Personal** | `personal.linkedin` | `"https://linkedin.com/in/aryan-Pandey-dev"` | Your LinkedIn profile URL |
 | **Personal** | `personal.location` | `"India [Update City/State]"` | Your city and state/country |
 | **Education** | `institution` | `"[Your University / Institute Name]"` | Your university/college name |
 | **Education** | `duration` | `"2023 - 2027 (Expected)"` | Your actual enrollment years |
