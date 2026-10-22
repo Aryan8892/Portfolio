@@ -7,17 +7,17 @@ export const ResumeSection: React.FC = () => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
 
   return (
-    <section id="resume" className="py-24 relative overflow-hidden bg-[#07080d]/70">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="resume" className="py-14 sm:py-16 relative overflow-hidden bg-[#07080d]/70 w-full">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
 
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-3">
             <FileText className="w-3.5 h-3.5" />
             <span>Curriculum Vitae</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            resume &amp; <span className="text-gradient-electric">Credentials</span>
+            Resume &amp; <span className="text-gradient-electric">Credentials</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
             A comprehensive overview of my academic record, technical toolset, and engineering projects prepared for internship and full-time hiring reviews.
@@ -25,7 +25,7 @@ export const ResumeSection: React.FC = () => {
         </div>
 
         {/* resume Spotlight Card */}
-        <div className="max-w-4xl mx-auto glass-panel p-8 sm:p-10 rounded-2xl border border-cyan-500/30 shadow-2xl relative overflow-hidden">
+        <div className="max-w-5xl xl:max-w-6xl mx-auto w-full glass-panel p-8 sm:p-10 rounded-2xl border border-cyan-500/30 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-cyan-500/10 via-violet-500/10 to-transparent blur-2xl pointer-events-none" />
 
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 pb-8 border-b border-white/10">

@@ -12,7 +12,7 @@ export const Navbar: React.FC = () => {
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
     { label: 'Education', href: '#education' },
-    { label: 'resume', href: '#resume' },
+    { label: 'Resume', href: '#resume' },
     { label: 'Contact', href: '#contact' },
   ];
 
@@ -21,22 +21,30 @@ export const Navbar: React.FC = () => {
       setIsScrolled(window.scrollY > 20);
 
       const sections = ['hero', 'about', 'skills', 'projects', 'education', 'resume', 'contact'];
-      const scrollPosition = window.scrollY + 200;
 
-      for (const section of sections) {
-        const el = document.getElementById(section);
+      // If scrolled near bottom of page, highlight contact
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80) {
+        setActiveSection('contact');
+        return;
+      }
+
+      // Check sections from bottom to top using getBoundingClientRect
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
         if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-            break;
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= window.innerHeight * 0.35) {
+            setActiveSection(sections[i]);
+            return;
           }
         }
       }
+
+      setActiveSection('hero');
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -47,7 +55,7 @@ export const Navbar: React.FC = () => {
           : 'bg-transparent py-5'
         }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a

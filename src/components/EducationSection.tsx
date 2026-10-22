@@ -6,12 +6,12 @@ export const EducationSection: React.FC = () => {
   const { education } = PORTFOLIO_DATA;
 
   return (
-    <section id="education" className="py-24 relative overflow-hidden bg-radial-gradient">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="education" className="py-14 sm:py-16 relative overflow-hidden bg-radial-gradient w-full">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-3">
             <GraduationCap className="w-3.5 h-3.5" />
             <span>Academic Background</span>
           </div>
@@ -24,7 +24,7 @@ export const EducationSection: React.FC = () => {
         </div>
 
         {/* Education Timeline */}
-        <div className="max-w-4xl mx-auto relative space-y-8">
+        <div className="max-w-5xl xl:max-w-6xl mx-auto w-full relative space-y-6">
           
           {/* Timeline Line */}
           <div className="hidden sm:block absolute left-8 top-4 bottom-4 w-0.5 bg-gradient-to-b from-cyan-500 via-violet-500 to-transparent pointer-events-none" />

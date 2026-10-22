@@ -13,15 +13,15 @@ export const AboutSection: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="py-24 relative overflow-hidden bg-[#07080d]/50">
+    <section id="about" className="py-14 sm:py-16 relative overflow-hidden bg-[#07080d]/50 w-full">
       {/* Background Grid Accent */}
       <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-3">
             <UserCheck className="w-3.5 h-3.5" />
             <span>Profile &amp; Engineering Philosophy</span>
           </div>
@@ -34,7 +34,7 @@ export const AboutSection: React.FC = () => {
         </div>
 
         {/* Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {about.pillars.map((pillar, index) => (
             <div
               key={index}

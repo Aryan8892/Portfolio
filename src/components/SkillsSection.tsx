@@ -30,12 +30,12 @@ export const SkillsSection: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden bg-radial-gradient">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="skills" className="py-14 sm:py-16 relative overflow-hidden bg-radial-gradient w-full">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-3">
             <Wrench className="w-3.5 h-3.5" />
             <span>Technical Capabilities</span>
           </div>
@@ -48,7 +48,7 @@ export const SkillsSection: React.FC = () => {
         </div>
 
         {/* Category Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
           {categories.map((cat) => {
             const isSelected = activeCategoryIndex === cat.value;
             return (
@@ -68,7 +68,7 @@ export const SkillsSection: React.FC = () => {
         </div>
 
         {/* Skills Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-10">
           {displayedSkills.map((skill, idx) => (
             <div
               key={idx}

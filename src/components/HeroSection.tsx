@@ -10,13 +10,13 @@ export const HeroSection: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen pt-28 pb-16 lg:pt-36 lg:pb-24 flex items-center overflow-hidden bg-radial-gradient"
+      className="relative min-h-[92vh] pt-24 pb-12 lg:pt-28 lg:pb-14 flex items-center overflow-hidden bg-radial-gradient w-full"
     >
       {/* Background glow ambient layers */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-cyan-500/15 via-violet-600/15 to-transparent blur-[120px] pointer-events-none -z-10 rounded-full" />
       <div className="absolute top-1/3 right-10 w-80 h-80 bg-violet-500/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
           {/* Left Column: Hero Text Content */}
@@ -143,7 +143,7 @@ export const HeroSection: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-[11px] font-mono text-slate-400">Engineering</div>
-                  <div className="text-xs font-bold text-white">Web &amp; Embedded IoT</div>
+                  <div className="text-xs font-bold text-white">Software Developer</div>
                 </div>
               </div>
             </div>
@@ -152,7 +152,7 @@ export const HeroSection: React.FC = () => {
         </div>
 
         {/* Highlight Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-8 border-t border-white/10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10 pt-6 border-t border-white/10">
           {personal.stats.map((stat, i) => (
             <div key={i} className="glass-panel p-4 rounded-xl border border-white/5 hover:border-cyan-500/20 transition-colors">
               <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono text-gradient-electric">

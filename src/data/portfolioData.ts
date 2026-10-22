@@ -42,7 +42,7 @@ export interface EducationItem {
 export const PORTFOLIO_DATA = {
   personal: {
     name: "Aryan Pandey",
-    roleHeadline: "B.Tech in Computer Science & Engineering (Data Science)",
+    roleHeadline: " B.Tech in Computer Science & Engineering (Data Science)",
     subheadline: "Frontend Development & Software Engineering | Web Applications & Embedded Systems",
     shortBio: "B.Tech student specializing in Computer Science and Engineering (Data Science), with an interest in frontend development and software engineering. Familiar with HTML, CSS, Java, and Python, with hands-on project experience in web application development and Arduino-based embedded systems. Eager to learn new technologies, strengthen problem-solving skills, and contribute to real-world projects through an internship opportunity.",
     location: "Hyderabad, Telangana, India",
