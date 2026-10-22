@@ -12,7 +12,7 @@ export const Navbar: React.FC = () => {
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
     { label: 'Education', href: '#education' },
-    { label: 'Resume', href: '#resume' },
+    { label: 'resume', href: '#resume' },
     { label: 'Contact', href: '#contact' },
   ];
 
@@ -138,10 +138,10 @@ export const Navbar: React.FC = () => {
               </a>
               <a
                 href={PORTFOLIO_DATA.personal.resumeUrl}
-                download="Aryan_Pandey_Resume.pdf"
+                download="Aryan_Pandey_resume.pdf"
                 className="w-full text-center py-2 px-4 rounded-lg border border-white/15 text-slate-300 text-xs font-medium hover:bg-white/5"
               >
-                Download Resume (PDF)
+                Download resume (PDF)
               </a>
             </div>
           </div>

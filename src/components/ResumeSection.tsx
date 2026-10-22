@@ -17,14 +17,14 @@ export const ResumeSection: React.FC = () => {
             <span>Curriculum Vitae</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            Resume &amp; <span className="text-gradient-electric">Credentials</span>
+            resume &amp; <span className="text-gradient-electric">Credentials</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
             A comprehensive overview of my academic record, technical toolset, and engineering projects prepared for internship and full-time hiring reviews.
           </p>
         </div>
 
-        {/* Resume Spotlight Card */}
+        {/* resume Spotlight Card */}
         <div className="max-w-4xl mx-auto glass-panel p-8 sm:p-10 rounded-2xl border border-cyan-500/30 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-cyan-500/10 via-violet-500/10 to-transparent blur-2xl pointer-events-none" />
 
@@ -35,7 +35,7 @@ export const ResumeSection: React.FC = () => {
                 <span>{personal.resumeLastUpdated}</span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                {personal.name} &mdash; SDE Resume
+                {personal.name} &mdash; SDE resume
               </h3>
               <p className="text-sm text-slate-400 mt-1 font-mono">
                 B.Tech in Computer Science &amp; Engineering &bull; Full-Stack &amp; Embedded Systems
@@ -46,7 +46,7 @@ export const ResumeSection: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
               <a
                 href={personal.resumeUrl}
-                download="Aryan_Pandey_Resume.pdf"
+                download="Aryan_Pandey_resume.pdf"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-600 text-white font-semibold text-sm shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <Download className="w-4 h-4" />
@@ -71,10 +71,10 @@ export const ResumeSection: React.FC = () => {
                 01. Technical Stack
               </div>
               <ul className="text-xs text-slate-300 space-y-1.5">
-                <li>&bull; Java (OOP, Collections, Concurrency)</li>
-                <li>&bull; Data Structures &amp; Algorithms</li>
-                <li>&bull; React, TypeScript &amp; Tailwind CSS</li>
-                <li>&bull; SQL, REST APIs, Git &amp; Linux</li>
+                <li>&bull; Frontend: HTML5, CSS3, JavaScript, React</li>
+                <li>&bull; Languages: Java, Python, C, C++, R</li>
+                <li>&bull; Database: SQL, MySQL</li>
+                <li>&bull; Tools: Git, GitHub, VS Code, Antigravity</li>
               </ul>
             </div>
 
@@ -83,9 +83,9 @@ export const ResumeSection: React.FC = () => {
                 02. Featured Projects
               </div>
               <ul className="text-xs text-slate-300 space-y-1.5">
-                <li>&bull; CivicTrust Complaint Portal (Full-Stack)</li>
-                <li>&bull; Alcohol Sensing Alert System (IoT)</li>
-                <li>&bull; SMART-WORK-HUB (Team Productivity)</li>
+                <li>&bull; Alcohol Sensing Alert System (Engine Off IoT)</li>
+                <li>&bull; VetCare – Veterinary Clinic &amp; Pet Care System</li>
+                <li>&bull; CivicTrust – Complaint Management Portal</li>
               </ul>
             </div>
 
@@ -94,9 +94,10 @@ export const ResumeSection: React.FC = () => {
                 03. Education &amp; Target
               </div>
               <ul className="text-xs text-slate-300 space-y-1.5">
-                <li>&bull; B.Tech Computer Science (2023 - 2027)</li>
-                <li>&bull; Core CS: OS, DBMS, Networks, DSA</li>
-                <li>&bull; Target: Software Development Intern</li>
+                <li>&bull; B.Tech CSE (Data Science) [2025 - 2028] (8.1 CGPA)</li>
+                <li>&bull; St. Peter's Engineering College, Hyderabad</li>
+                <li>&bull; Diploma in ECE (7.8 CGPA) | Govt. Polytechnic</li>
+                <li>&bull; Target: Software Engineering &amp; Frontend Intern</li>
               </ul>
             </div>
           </div>
@@ -107,11 +108,11 @@ export const ResumeSection: React.FC = () => {
               <span>Looking for a custom ATS format or tailored portfolio link?</span>
             </div>
             <a
-              href={`mailto:${personal.email}?subject=Resume%20Inquiry%20-%20Software%20Developer%20Role`}
+              href={`mailto:${personal.email}?subject=resume%20Inquiry%20-%20Software%20Developer%20Role`}
               className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
             >
               <Mail className="w-3.5 h-3.5" />
-              <span>Request Custom Resume via Email</span>
+              <span>Request Custom resume via Email</span>
             </a>
           </div>
         </div>
@@ -132,7 +133,7 @@ export const ResumeSection: React.FC = () => {
           >
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
               <div>
-                <h3 className="text-xl font-bold text-white">Resume Fast Snapshot</h3>
+                <h3 className="text-xl font-bold text-white">resume Fast Snapshot</h3>
                 <p className="text-xs text-slate-400 font-mono">Curated summary for hiring managers</p>
               </div>
               <button
@@ -172,7 +173,7 @@ export const ResumeSection: React.FC = () => {
             <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
               <a
                 href={personal.resumeUrl}
-                download="Aryan_Pandey_Resume.pdf"
+                download="Aryan_Pandey_resume.pdf"
                 className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold"
               >
                 Download PDF Document

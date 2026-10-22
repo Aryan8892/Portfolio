@@ -49,7 +49,7 @@ export const HeroSection: React.FC = () => {
               <span className="text-xs font-mono uppercase text-slate-400 mr-2 flex items-center gap-1">
                 <Code2 className="w-3.5 h-3.5 text-cyan-400" /> Core Focus:
               </span>
-              {['Java & OOP', 'Data Structures & Algorithms', 'React & TypeScript', 'SQL & REST APIs', 'IoT Prototypes'].map((tag) => (
+              {['React & JavaScript', 'HTML5 & CSS3', 'Java & Python', 'Arduino & Embedded C/C++', 'SQL & Databases'].map((tag) => (
                 <span
                   key={tag}
                   className="px-2.5 py-1 text-xs rounded-md bg-white/5 border border-white/10 text-slate-300 font-mono"
@@ -71,11 +71,11 @@ export const HeroSection: React.FC = () => {
 
               <a
                 href={personal.resumeUrl}
-                download="Aryan_Pandey_Resume.pdf"
+                download="Aryan_Pandey_resume.pdf"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/5 border border-white/15 hover:border-cyan-400/50 hover:bg-white/10 text-slate-200 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 group"
               >
                 <FileDown className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
-                <span>Download Resume</span>
+                <span>Download resume</span>
               </a>
             </div>
 
@@ -132,8 +132,8 @@ export const HeroSection: React.FC = () => {
                   <Code2 className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-mono text-slate-400">Primary Core</div>
-                  <div className="text-xs font-bold text-white">Java &amp; DSA</div>
+                  <div className="text-[11px] font-mono text-slate-400">Specialization</div>
+                  <div className="text-xs font-bold text-white">CSE (Data Science)</div>
                 </div>
               </div>
 
@@ -143,7 +143,7 @@ export const HeroSection: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-[11px] font-mono text-slate-400">Engineering</div>
-                  <div className="text-xs font-bold text-white">Full-Stack &amp; IoT</div>
+                  <div className="text-xs font-bold text-white">Web &amp; Embedded IoT</div>
                 </div>
               </div>
             </div>

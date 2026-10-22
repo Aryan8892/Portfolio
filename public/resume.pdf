@@ -6,46 +6,134 @@ endobj
 << /Type /Pages /Kids [3 0 R] /Count 1 >>
 endobj
 3 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 500 >>
+<< /Length 1950 >>
 stream
 BT
-/F1 20 Tf
-50 720 Td
-(Aryan Pandey - Software Development Resume) Tj
-/F1 12 Tf
-0 -30 Td
-(Email: aryan.dev.contact@example.com | B.Tech Computer Science & Engineering) Tj
-0 -30 Td
-(CORE SKILLS: Java, Data Structures & Algorithms, React, TypeScript, SQL, Git) Tj
-0 -30 Td
-(PROJECTS:) Tj
-0 -20 Td
-(1. CivicTrust Complaint Management Portal - Civic Grievance System) Tj
-0 -20 Td
-(2. Alcohol Sensing Alert: Engine Off Technology - IoT Safety Prototype) Tj
-0 -20 Td
-(3. SMART-WORK-HUB - Collaborative Team Productivity Platform) Tj
-0 -30 Td
-(EDUCATION: Bachelor of Technology in Computer Science [2023 - 2027]) Tj
+/F2 16 Tf
+50 745 Td
+(Aryan Pandey) Tj
+/F1 10 Tf
+0 -18 Td
+(Hyderabad, Telangana | aryanpandey2675@gmail.com | github.com/Aryan8892 | linkedin.com/in/aryan-pandey-4b2609402) Tj
+
+/F2 12 Tf
+0 -24 Td
+(PROFESSIONAL SUMMARY) Tj
+/F1 9 Tf
+0 -14 Td
+(B.Tech student specializing in Computer Science and Engineering (Data Science), with an interest in frontend) Tj
+0 -12 Td
+(development and software engineering. Familiar with HTML, CSS, Java, and Python, with hands-on project) Tj
+0 -12 Td
+(experience in web application development and Arduino-based embedded systems. Eager to learn new technologies,) Tj
+0 -12 Td
+(strengthen problem-solving skills, and contribute to real-world projects through an internship opportunity.) Tj
+
+/F2 12 Tf
+0 -22 Td
+(EDUCATION) Tj
+/F2 10 Tf
+0 -15 Td
+(St. Peter's Engineering College, Hyderabad) Tj
+/F1 9 Tf
+0 -12 Td
+(B.Tech in Computer Science and Engineering (Data Science) | (2025 - 2028) | Present CGPA: 8.1) Tj
+/F2 10 Tf
+0 -15 Td
+(Government Polytechnic, Mahabubnagar) Tj
+/F1 9 Tf
+0 -12 Td
+(Diploma in Electronics and Communication Engineering | (2022 - 2025) | CGPA: 7.8) Tj
+/F2 10 Tf
+0 -15 Td
+(Holy Angels High School, Hyderabad) Tj
+/F1 9 Tf
+0 -12 Td
+(Secondary School Education (Class X) | May 2022 | CGPA: 8.7) Tj
+
+/F2 12 Tf
+0 -22 Td
+(PROJECTS) Tj
+/F2 10 Tf
+0 -15 Td
+(Alcohol Sensing Alert System - Engine Off Technology (2025)) Tj
+/F1 8.5 Tf
+0 -12 Td
+(Technologies: Arduino Nano, Embedded C/C++, MQ-3 Alcohol Sensor, Relay Module) Tj
+0 -11 Td
+(- Developed an Arduino-based vehicle safety prototype designed to detect alcohol vapors and prevent drunk driving.) Tj
+0 -11 Td
+(- Integrated MQ-3 alcohol sensor with Arduino Nano to collect and process sensor readings against predefined threshold.) Tj
+0 -11 Td
+(- Designed a relay-based ignition cutoff mechanism to prevent engine starting when alcohol detection exceeds threshold.) Tj
+0 -11 Td
+(- Incorporated warning mechanism to alert the driver and explored emergency override and fail-safe operation.) Tj
+
+/F2 10 Tf
+0 -16 Td
+(VetCare - Veterinary Clinic & Pet Care Management System (Present - 2026)) Tj
+/F1 8.5 Tf
+0 -12 Td
+(Technologies: React, JavaScript, HTML, CSS | Tools: Antigravity (AI-assisted development)) Tj
+0 -11 Td
+(- Developed an AI-assisted veterinary care web application to help pet owners manage pet profiles and clinic appointments.) Tj
+0 -11 Td
+(- Built a React-based user interface with separate workflows for pet owners and veterinary clinics.) Tj
+0 -11 Td
+(- Implemented pet profile management and appointment booking workflows, including appointment status management.) Tj
+0 -11 Td
+(- Designed responsive UI components for clinic discovery, pet health history, and appointment management.) Tj
+
+/F2 10 Tf
+0 -16 Td
+(CivicTrust - Complaint Management Portal (Present - 2026)) Tj
+/F1 8.5 Tf
+0 -12 Td
+(Technologies: React, JavaScript, HTML, CSS | Tools: Antigravity (AI-assisted development)) Tj
+0 -11 Td
+(- Designed AI-assisted development workflow to build a web-based portal for complaint registration, tracking & resolution.) Tj
+0 -11 Td
+(- Developed structured UI with separate role-oriented workflows for citizens, department staff, and administrators.) Tj
+0 -11 Td
+(- Designed complaint management dashboards, navigation flows, and administrative interfaces to improve usability.) Tj
+
+/F2 12 Tf
+0 -22 Td
+(TECHNICAL SKILLS) Tj
+/F1 9 Tf
+0 -14 Td
+(Frontend Development: HTML, CSS, JavaScript) Tj
+0 -12 Td
+(Languages: Java, Python, C, C++, R) Tj
+0 -12 Td
+(Database Management: SQL, MySQL) Tj
+0 -12 Td
+(Frameworks: React, Node.js) Tj
+0 -12 Td
+(Developer Tools: Git, GitHub, VS Code, Visual Studio, PyCharm, IntelliJ, Eclipse, Antigravity) Tj
 ET
 endstream
 endobj
 5 0 obj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
 xref
-0 6
+0 7
 0000000000 65535 f 
 0000000009 00000 n 
 0000000058 00000 n 
 0000000115 00000 n 
-0000000227 00000 n 
-0000000780 00000 n 
+0000000244 00000 n 
+0000002246 00000 n 
+0000002303 00000 n 
 trailer
-<< /Size 6 /Root 1 0 R >>
+<< /Size 7 /Root 1 0 R >>
 startxref
-860
+2365
 %%EOF

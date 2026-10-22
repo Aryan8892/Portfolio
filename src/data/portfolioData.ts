@@ -42,165 +42,170 @@ export interface EducationItem {
 export const PORTFOLIO_DATA = {
   personal: {
     name: "Aryan Pandey",
-    roleHeadline: "Aspiring Software Engineer & B.Tech Student",
-    subheadline: "Specializing in Java, Data Structures & Algorithms, and Modern Web Applications",
-    shortBio: "A dedicated B.Tech student with strong problem-solving skills and a passion for engineering scalable software solutions. Actively seeking Software Development Engineer (SDE) internships and graduate engineering roles where I can build reliable, impactful systems.",
-    location: "India [Update City/State]",
-    statusBadge: "Actively seeking 2026/2027 SDE Internships & Placements",
-    email: "aryan.dev.contact@example.com", // Replace with your primary email
-    github: "https://github.com/aryanPandey-dev", // Replace with your GitHub profile
-    linkedin: "https://linkedin.com/in/aryan-Pandey-dev", // Replace with your LinkedIn profile
-    resumeUrl: "/resume.pdf", // Path in public directory
-    resumeLastUpdated: "Updated for 2026 Opportunities",
+    roleHeadline: "B.Tech in Computer Science & Engineering (Data Science)",
+    subheadline: "Frontend Development & Software Engineering | Web Applications & Embedded Systems",
+    shortBio: "B.Tech student specializing in Computer Science and Engineering (Data Science), with an interest in frontend development and software engineering. Familiar with HTML, CSS, Java, and Python, with hands-on project experience in web application development and Arduino-based embedded systems. Eager to learn new technologies, strengthen problem-solving skills, and contribute to real-world projects through an internship opportunity.",
+    location: "Hyderabad, Telangana, India",
+    statusBadge: "Eager & Available for SDE / Frontend Internships",
+    email: "aryanpandey2675@gmail.com",
+    github: "https://github.com/Aryan8892",
+    linkedin: "https://www.linkedin.com/in/aryan-pandey-4b2609402/",
+    resumeUrl: "/resume.pdf",
+    resumeLastUpdated: "Updated from Official Resume",
     stats: [
-      { label: "Core Projects", value: "3+" },
-      { label: "DSA Problems Solved", value: "250+" },
-      { label: "Primary Language", value: "Java" },
-      { label: "Focus", value: "SDE & Web" },
+      { label: "Verified Projects", value: "3" },
+      { label: "B.Tech Present CGPA", value: "8.1" },
+      { label: "Specialization", value: "Data Science" },
+      { label: "Diploma CGPA", value: "7.8" },
     ]
   },
 
   about: {
     title: "About Me",
     badge: "Student & Software Developer",
-    introduction: "I am a Bachelor of Technology (B.Tech) undergraduate driven by an intrinsic curiosity for computational problem solving and clean system architecture. My primary foundation lies in Java and Data Structures & Algorithms, complemented by hands-on engineering across full-stack web platforms and IoT hardware prototypes.",
+    introduction: "I am a B.Tech student specializing in Computer Science and Engineering (Data Science) at St. Peter's Engineering College, Hyderabad. With a solid foundation in electronics, embedded systems, and modern web application development, I bridge hardware logic and responsive frontend user interfaces to build practical, real-world solutions.",
     pillars: [
       {
-        title: "Algorithmic Rigor",
-        description: "Constantly practicing core Data Structures & Algorithms (Trees, Graphs, DP, Arrays) with a strong emphasis on time and space complexity optimization."
+        title: "Frontend Engineering",
+        description: "Designing responsive, intuitive user interfaces using React, JavaScript, HTML5, and CSS with role-oriented workflows."
       },
       {
-        title: "Robust Development",
-        description: "Building responsive, maintainable web applications using React, TypeScript, and modern frontend design principles backed by clean RESTful architectures."
+        title: "Embedded Systems & IoT",
+        description: "Hands-on experience developing Arduino-based safety prototypes, sensor integration (MQ-3), and relay cutoff mechanisms."
       },
       {
-        title: "Hardware & IoT Exploration",
-        description: "Translating code into real-world impact through embedded microcontroller systems, sensor integrations, and automated safety logic."
+        title: "AI-Assisted Workflows",
+        description: "Leveraging cutting-edge AI-assisted developer tooling (Antigravity) to rapidly scaffold, refine, and troubleshoot application components."
       },
       {
-        title: "Engineering Mindset",
-        description: "Valuing clean code, version control hygiene (Git/GitHub), semantic structure, and continuous learning alongside collaborative team workflows."
+        title: "Core Programming & Data",
+        description: "Proficient foundations in Java, Python, C/C++, R, and relational database management (SQL, MySQL)."
       }
     ],
     technicalHighlights: [
-      "Proficient in Java Object-Oriented Programming (OOP) and Collections Framework",
-      "Hands-on experience developing end-to-end full stack web portals and embedded prototypes",
-      "Solid comprehension of Operating Systems, DBMS (SQL), and Computer Networking fundamentals",
-      "Passionate about writing readable, modular, and maintainable software"
+      "B.Tech in CSE (Data Science) with an 8.1 present CGPA at St. Peter's Engineering College, Hyderabad",
+      "Diploma in Electronics & Communication Engineering (7.8 CGPA) from Government Polytechnic, Mahabubnagar",
+      "Developed an Arduino-based Alcohol Sensing Alert System with vehicle ignition cutoff",
+      "Engineered full web platforms: VetCare (Pet Care Management) and CivicTrust (Grievance Portal)"
     ]
   },
 
   skills: [
     {
-      title: "Core Languages & Foundations",
-      description: "Fundamental languages and algorithmic programming",
+      title: "Frontend Development",
+      description: "Client-side engineering, responsive UI design & web standards",
       skills: [
-        { name: "Java (Core & OOP)", level: "Advanced", description: "Inheritance, Polymorphism, Collections Framework, Multithreading & Exception Handling" },
-        { name: "Data Structures & Algorithms", level: "Advanced", description: "Array manipulations, Linked Lists, Trees, Graphs, Sorting/Searching, Dynamic Programming" },
-        { name: "C / C++", level: "Proficient", description: "Pointers, memory concepts, fundamental logic and embedded firmware programming" },
-        { name: "SQL", level: "Proficient", description: "Relational schema design, complex joins, indexing, query optimization" }
+        { name: "HTML5", level: "Advanced", description: "Semantic markup, structured content layout, accessibility & SEO standards" },
+        { name: "CSS3 / Modern Styling", level: "Advanced", description: "Responsive layouts, flexbox, grid, animations, and custom styling systems" },
+        { name: "JavaScript (ES6+)", level: "Proficient", description: "DOM manipulation, asynchronous workflows, promises, modern ES syntax" },
+        { name: "React", level: "Proficient", description: "Component-based architecture, hooks, state management, role-based workflows" }
       ]
     },
     {
-      title: "Frontend & Web Technologies",
-      description: "Modern client-side engineering and responsive user interfaces",
+      title: "Programming Languages",
+      description: "Core languages for software engineering and data applications",
       skills: [
-        { name: "React.js", level: "Proficient", description: "Functional components, custom hooks, virtual DOM, performance optimization" },
-        { name: "TypeScript", level: "Proficient", description: "Strict static typing, interfaces, generics, maintainable codebases" },
-        { name: "JavaScript (ES6+)", level: "Advanced", description: "Asynchronous async/await, closures, promises, DOM manipulation" },
-        { name: "Tailwind CSS", level: "Advanced", description: "Utility-first design systems, responsive layouts, glassmorphism, micro-interactions" },
-        { name: "HTML5 & Semantic Web", level: "Advanced", description: "Accessible markup, SEO metadata, web standards, cross-browser compatibility" }
+        { name: "Java", level: "Proficient", description: "Object-oriented programming, core syntax, collections, logic implementation" },
+        { name: "Python", level: "Proficient", description: "Scripting, algorithmic problem solving, data processing fundamentals" },
+        { name: "C / C++", level: "Proficient", description: "Pointers, memory concepts, embedded programming, firmware logic" },
+        { name: "R", level: "Familiar", description: "Data exploration, statistical analysis, academic data science foundation" }
       ]
     },
     {
-      title: "Computer Science Fundamentals",
-      description: "Underpinning academic and engineering foundations",
+      title: "Frameworks & Backend",
+      description: "Web application frameworks and runtime environments",
       skills: [
-        { name: "Object-Oriented Design (OOD)", level: "Advanced", description: "SOLID principles, design patterns, modular architecture, abstraction" },
-        { name: "Database Management (DBMS)", level: "Proficient", description: "ACID properties, normalization, relational integrity, transaction management" },
-        { name: "Operating Systems (OS)", level: "Proficient", description: "Process scheduling, thread concurrency, memory management, file systems" },
-        { name: "Computer Networks (CN)", level: "Proficient", description: "OSI & TCP/IP models, HTTP/HTTPS, DNS, sockets, REST API design" }
+        { name: "React", level: "Proficient", description: "Interactive user interfaces, component reusability, single page apps" },
+        { name: "Node.js", level: "Familiar", description: "Backend runtime environment, npm package ecosystem, server fundamentals" }
       ]
     },
     {
-      title: "Tools, Platforms & Workflow",
-      description: "Development tools, deployment environments and version control",
+      title: "Database Management",
+      description: "Relational data modeling, querying and schema management",
       skills: [
-        { name: "Git & GitHub", level: "Advanced", description: "Branching strategies, pull requests, version control, collaborative workflows" },
-        { name: "REST APIs & Postman", level: "Proficient", description: "API design, endpoint testing, request/response payload validation" },
-        { name: "Vite & Modern Tooling", level: "Proficient", description: "Rapid bundling, HMR, modern ES modules build optimization" },
-        { name: "Linux / CLI & Shell", level: "Familiar", description: "Command-line navigation, file permissions, shell scripts, environment configuration" }
+        { name: "SQL", level: "Proficient", description: "Relational queries, joins, data filtering, table schemas, normalization" },
+        { name: "MySQL", level: "Proficient", description: "Relational database administration, table indexing, ACID transactions" }
+      ]
+    },
+    {
+      title: "Developer Tools & IDEs",
+      description: "Version control, AI tooling, and integrated development environments",
+      skills: [
+        { name: "Git & GitHub", level: "Advanced", description: "Source code version control, repository management, collaborative workflows" },
+        { name: "Antigravity (AI Tools)", level: "Advanced", description: "AI-assisted development to generate, refine components, and accelerate engineering" },
+        { name: "VS Code & Visual Studio", level: "Advanced", description: "Primary development environments for web and embedded software" },
+        { name: "PyCharm, IntelliJ, Eclipse", level: "Proficient", description: "Specialized Java and Python development environments" }
       ]
     }
   ] as SkillCategory[],
 
   projects: [
     {
-      id: "civictrust-portal",
-      title: "CivicTrust Complaint Management Portal",
-      subtitle: "Decentralized & Transparent Civic Grievance Tracking System",
-      category: "Full-Stack",
-      featured: true,
-      shortDescription: "A modern, role-based complaint registration and tracking platform enabling citizens and municipal administrators to log, monitor, and resolve civic infrastructure issues in real-time.",
-      problemSolved: "Municipal complaint processes are often opaque, slow, and prone to lost tickets. CivicTrust streamlines grievance redressal with automated ticket IDs, status milestones, and accountability logging.",
-      fullDescription: "CivicTrust provides a structured digital workflow between citizens and administrative departments. Citizens can submit detailed grievances with category tagging (roads, sanitation, water supply, electricity), track resolution progress through a live status pipeline, and receive automated notifications. Administrators have an overview dashboard to assign department officers, filter complaints by urgency, and update resolution notes.",
-      tags: ["React", "TypeScript", "Tailwind CSS", "RESTful APIs", "Java Backend Architecture", "SQL Database"],
-      features: [
-        "Role-based authentication & separation (Citizen vs Department Administrator)",
-        "Automated unique ticket generator and end-to-end lifecycle status tracking",
-        "Categorized departmental routing (Sanitation, Roads, Electricity, Water)",
-        "Priority flags and SLA escalation alerts for overdue civic grievances",
-        "Responsive administrative dashboard with complaint resolution analytics"
-      ],
-      architectureOverview: "Frontend built with React and TypeScript communicating via RESTful endpoints to a modular backend service, backed by a normalized relational database schema for immutable complaint auditing.",
-      metricsOrOutcome: "Simulated load testing demonstrated seamless handling of simultaneous complaint registrations with under 150ms average API response time.",
-      githubUrl: "https://github.com/aryanPandey-dev/CivicTrust-Complaint-Portal",
-      liveUrl: "https://civictrust-demo.example.com",
-      isPrototypeOrHardware: false
-    },
-    {
       id: "alcohol-sensing-alert",
-      title: "Alcohol Sensing Alert: Engine Off Technology",
-      subtitle: "Smart Automotive Safety & DUI Prevention Embedded System",
+      title: "Alcohol Sensing Alert System – Engine Off Technology",
+      subtitle: "Smart Automotive Safety & DUI Prevention System (2025)",
       category: "IoT & Embedded",
       featured: true,
-      shortDescription: "An embedded IoT safety prototype incorporating high-precision alcohol gas sensing with microcontroller logic to automatically prevent vehicle ignition and alert emergency contacts when alcohol thresholds are breached.",
-      problemSolved: "Drunk driving causes millions of preventable accidents worldwide. This system provides a physical preventative safeguard by disengaging the vehicle ignition system before the vehicle can be operated.",
-      fullDescription: "Engineered around an MQ-3 alcohol sensor and microcontroller processing unit (Arduino/ESP32). When a driver enters the cabin, the sensor continuously monitors air sample concentration. If blood alcohol concentration (BAC) estimation exceeds the programmed safety threshold, a 5V relay module triggers an immediate ignition cutoff circuit, rendering the engine start sequence inoperable. Concurrently, an audible buzzer and LCD diagnostic alert are engaged, and an alert packet is transmitted via GSM/GPS telemetry.",
-      tags: ["Embedded C/C++", "Arduino / ESP32", "MQ-3 Gas Sensor", "Relay Control", "IoT Telemetry", "Hardware Prototype"],
+      shortDescription: "An Arduino-based vehicle safety prototype designed to detect alcohol vapors and prevent drunk driving by triggering an immediate ignition cutoff.",
+      problemSolved: "Drunk driving is a leading cause of preventable road accidents. This prototype provides an active mechanical safeguard by disengaging the vehicle's ignition before operation is possible.",
+      fullDescription: "Developed an Arduino-based vehicle safety prototype designed to detect alcohol vapors and help prevent drunk driving. Integrated an MQ-3 alcohol sensor with an Arduino Nano to collect and process sensor readings against a predefined threshold. Designed a relay-based ignition cutoff mechanism to prevent engine starting when alcohol detection exceeds the configured threshold. Incorporated a warning mechanism to alert the driver when potential alcohol consumption is detected, exploring emergency override and fail-safe operation to improve reliability.",
+      tags: ["Arduino Nano", "Embedded C/C++", "MQ-3 Alcohol Sensor", "Relay Module", "IoT Safety"],
       features: [
-        "Continuous alcohol vapor sensing with calibration against ambient temperature",
-        "Instant mechanical relay cutoff preventing starter motor and ignition coil activation",
-        "Audible piezo buzzer warning and dual-line LCD real-time PPM readout",
-        "Fail-safe circuit architecture ensuring default engine lock upon sensor disconnection",
-        "Emergency telemetry alert module configuration for GPS location broadcasting"
+        "Developed an Arduino-based vehicle safety prototype designed to detect alcohol vapors and prevent drunk driving",
+        "Integrated an MQ-3 alcohol sensor with an Arduino Nano to collect and process readings against a predefined threshold",
+        "Designed a relay-based ignition cutoff mechanism to prevent engine starting when alcohol detection exceeds threshold",
+        "Incorporated an active warning mechanism to alert the driver when potential alcohol consumption is detected",
+        "Explored safety features including emergency override and fail-safe operation to improve system reliability"
       ],
-      architectureOverview: "Analog sensor signals are digitized through ADC pins, evaluated against safety threshold algorithms on the MCU, which then toggles GPIO pins to switch high-power electromechanical relays.",
-      metricsOrOutcome: "Sub-second (<800ms) detection-to-cutoff response latency achieved in prototype testing environments.",
-      githubUrl: "https://github.com/aryanPandey-dev/Alcohol-Sensing-Engine-Cutoff",
+      architectureOverview: "Analog MQ-3 sensor readings are continuously sampled and processed by the Arduino Nano microcontroller. If the reading crosses the safety threshold, GPIO signals actuate a high-power relay module to cut off the engine ignition circuit while triggering driver warnings.",
+      metricsOrOutcome: "Reliable threshold-triggered cutoff mechanism demonstrated in prototype testing for automotive safety compliance.",
+      githubUrl: "https://github.com/Aryan8892/Alcohol-Sensing-Alert-System",
       isPrototypeOrHardware: true
     },
     {
-      id: "smart-work-hub",
-      title: "SMART-WORK-HUB",
-      subtitle: "Centralized Productivity & Team Task Coordination Platform",
+      id: "vetcare-management-system",
+      title: "VetCare – Veterinary Clinic & Pet Care Management System",
+      subtitle: "AI-Assisted Pet Healthcare & Clinic Appointment Platform (Present - 2026)",
       category: "Web App",
       featured: true,
-      shortDescription: "A modular productivity workspace engineered to streamline team sprint planning, milestone delivery, priority filtering, and project progress tracking.",
-      problemSolved: "Distributed student and developer teams struggle with fragmented communication and scattered task checklists. SMART-WORK-HUB consolidates sprint tracking into a clean, distraction-free interface.",
-      fullDescription: "SMART-WORK-HUB offers customizable Kanban boards, priority categorization, milestone countdowns, and progress analytics. Built with high-performance client state management to ensure instantaneous reactivity, drag-and-drop task reordering, and local persistence fallback.",
-      tags: ["React", "TypeScript", "Tailwind CSS", "State Management", "Vite", "Productivity"],
+      shortDescription: "An AI-assisted veterinary care web application helping pet owners manage pet profiles, medical records, and clinic appointments with role-oriented workflows.",
+      problemSolved: "Pet owners often struggle with fragmented pet vaccination records and cumbersome clinic scheduling. VetCare centralizes pet profiles and appointment bookings in one cohesive interface.",
+      fullDescription: "Developed an AI-assisted veterinary care web application to help pet owners manage pet profiles, healthcare records, and clinic appointments. Built a React-based user interface with separate workflows for pet owners and veterinary clinics. Implemented pet profile management and appointment booking workflows, including appointment status management. Designed responsive UI components for clinic discovery, pet health history, and appointment management using AI-assisted development tools (Antigravity).",
+      tags: ["React", "JavaScript", "HTML5", "CSS3", "Antigravity AI", "Web App"],
       features: [
-        "Interactive multi-column Kanban board with dynamic task status transitions",
-        "Priority categorization (High, Medium, Low) and deadline urgency badges",
-        "Instant search filter and tag-based sorting across all backlog items",
-        "Persistent local state caching with seamless synchronization",
-        "Clean, distraction-free dark UI designed for engineering sprints"
+        "Developed an AI-assisted veterinary care web application for pet profiles, healthcare records, and clinic appointments",
+        "Built a React-based user interface with separate, intuitive workflows for pet owners and veterinary clinics",
+        "Implemented pet profile management and appointment booking workflows with real-time status management",
+        "Designed responsive UI components for clinic discovery, pet health history, and appointment coordination",
+        "Used AI-assisted development tools (Antigravity) to generate, refine components, troubleshoot issues, and optimize workflow"
       ],
-      architectureOverview: "Modular React component architecture utilizing strict TypeScript type contracts, centralized reducer-based state management, and optimized render cycles.",
-      metricsOrOutcome: "100% client-side offline capability with zero layout shift (CLS < 0.01) and instant load times.",
-      githubUrl: "https://github.com/aryanPandey-dev/SMART-WORK-HUB",
-      liveUrl: "https://smart-work-hub-demo.example.com",
+      architectureOverview: "Modular React application featuring role-separated views for pet parents and veterinarians, managing dynamic state transitions for appointment workflows and digital pet medical history cards.",
+      metricsOrOutcome: "Smooth user experience with responsive layout for both clinic administrative desks and mobile pet owners.",
+      githubUrl: "https://github.com/Aryan8892/VetCare-Management-System",
+      liveUrl: "https://vetcare-demo.example.com",
+      isPrototypeOrHardware: false
+    },
+    {
+      id: "civictrust-portal",
+      title: "CivicTrust – Complaint Management Portal",
+      subtitle: "Web-Based Grievance Registration & Resolution Platform (Present - 2026)",
+      category: "Full-Stack",
+      featured: true,
+      shortDescription: "A web-based complaint management portal for civic grievance registration, tracking, and resolution with separate role-oriented workflows.",
+      problemSolved: "Municipal complaint processes are often opaque, slow, and prone to lost tickets. CivicTrust streamlines grievance redressal with automated ticket IDs, status milestones, and accountability logging.",
+      fullDescription: "Designed an AI-assisted development workflow to build a web-based complaint management portal for complaint registration, tracking, and resolution. Developed a structured user interface with separate role-oriented workflows for citizens, department staff, and administrators. Designed complaint management dashboards, navigation flows, and administrative interfaces to improve usability and transparency. Created responsive UI layouts for complaint handling, status tracking, and role-specific application pages using Antigravity AI tools.",
+      tags: ["React", "JavaScript", "HTML5", "CSS3", "Antigravity AI", "Full-Stack UI"],
+      features: [
+        "Designed an AI-assisted development workflow to build a web-based complaint portal for registration, tracking & resolution",
+        "Developed a structured user interface with separate role-oriented workflows for citizens, department staff & administrators",
+        "Designed complaint management dashboards, navigation flows, and administrative interfaces for high transparency",
+        "Created responsive UI layouts for complaint handling, status milestone tracking, and role-specific views",
+        "Used AI-assisted development tools (Antigravity) to generate, refine interface components, and accelerate debugging"
+      ],
+      architectureOverview: "Role-oriented frontend architecture implemented in React with distinct access portals for citizens, municipal department officers, and executive supervisors, ensuring clear ticket routing and transparency.",
+      metricsOrOutcome: "Organized multi-tier grievance pipeline facilitating transparent status updates and departmental issue assignment.",
+      githubUrl: "https://github.com/Aryan8892/CivicTrust-Complaint-Portal",
+      liveUrl: "https://civictrust-demo.example.com",
       isPrototypeOrHardware: false
     }
   ] as Project[],
@@ -208,57 +213,76 @@ export const PORTFOLIO_DATA = {
   education: [
     {
       degree: "Bachelor of Technology (B.Tech)",
-      specialization: "Computer Science & Engineering",
-      institution: "[Your University / Institute Name]", // E.g., National Institute of Technology / State Technical University
-      location: "[City, State, Country]",
-      duration: "2023 - 2027 (Expected)",
-      status: "Currently in 3rd Year / Undergraduate",
-      cgpaOrGrade: "Current CGPA: 8.5 / 10.0 [Update with actual grade]",
+      specialization: "Computer Science and Engineering (Data Science)",
+      institution: "St. Peter's Engineering College, Hyderabad",
+      location: "Hyderabad, Telangana",
+      duration: "2025 – 2028",
+      status: "Currently Pursuing (Undergraduate)",
+      cgpaOrGrade: "Present CGPA: 8.1",
       relevantCoursework: [
+        "Data Science Foundations",
+        "Frontend Web Development",
         "Data Structures & Algorithms",
-        "Object-Oriented Programming (Java/C++)",
-        "Database Management Systems (DBMS)",
-        "Operating Systems",
-        "Computer Networks",
+        "Database Management Systems (SQL)",
         "Software Engineering",
-        "Discrete Mathematics",
-        "Design & Analysis of Algorithms"
+        "Python & Java Programming"
       ],
       keyHighlights: [
-        "Strong academic foundation in core computer science principles and algorithmic design",
-        "Active participant in technical symposiums, coding competitions, and hackathons",
-        "Hands-on project work bridging theoretical algorithms with practical software development"
+        "Specializing in Computer Science & Engineering with a focused concentration on Data Science",
+        "Hands-on project work in AI-assisted web application development and embedded systems",
+        "Maintaining a strong 8.1 present CGPA while actively building real-world software prototypes"
       ]
     },
     {
-      degree: "Senior Secondary Education (Class XII)",
-      specialization: "Science Stream (Physics, Chemistry, Mathematics & Computer Science)",
-      institution: "[Your Senior Secondary School / Junior College Name]",
-      location: "[City, State]",
-      duration: "2021 - 2023",
+      degree: "Diploma in Engineering",
+      specialization: "Electronics and Communication Engineering",
+      institution: "Government Polytechnic, Mahabubnagar",
+      location: "Mahabubnagar, Telangana",
+      duration: "2022 – 2025",
       status: "Completed",
-      cgpaOrGrade: "Percentage: [Update e.g. 88.5%]",
+      cgpaOrGrade: "CGPA: 7.8",
       relevantCoursework: [
-        "Mathematics & Calculus",
-        "Computer Science (Basics of C++ / Python)",
-        "Physics & Electronics"
+        "Microcontrollers & Embedded Systems",
+        "Electronic Devices & Circuits",
+        "C & Embedded C Programming",
+        "Sensor Interfacing & Actuators",
+        "Digital Electronics"
       ],
       keyHighlights: [
-        "Solid analytical and mathematical problem-solving background",
-        "Represented school in science and technology exhibitions"
+        "Graduated with a 7.8 CGPA, building a strong hardware-software foundation",
+        "Engineered the Arduino-based Alcohol Sensing Alert System with vehicle ignition cutoff",
+        "Extensive laboratory experience in circuit design, sensor calibration, and relay switching"
+      ]
+    },
+    {
+      degree: "Secondary School Education (Class X)",
+      specialization: "General Academic Curriculum",
+      institution: "Holy Angels High School, Hyderabad",
+      location: "Hyderabad, Telangana",
+      duration: "May 2022",
+      status: "Completed",
+      cgpaOrGrade: "CGPA: 8.7",
+      relevantCoursework: [
+        "Mathematics & Analytical Reasoning",
+        "General Science & Physics",
+        "Computer Basics"
+      ],
+      keyHighlights: [
+        "Completed Class X with an outstanding 8.7 CGPA",
+        "Consistently demonstrated strong mathematical aptitude and scientific curiosity"
       ]
     }
   ] as EducationItem[],
 
   contact: {
     heading: "Let's Connect & Build Together",
-    subheading: "I am actively seeking software engineering internships, co-op opportunities, and placement roles. Whether you have an open position, an exciting project, or a technical inquiry, my inbox is always open.",
+    subheading: "I am actively seeking software engineering and frontend development internship opportunities. Whether you have an open position, an exciting project, or a technical inquiry, my inbox is always open.",
     responseTime: "Typically replies within 24 hours",
     fields: {
-      email: "aryan.dev.contact@example.com",
-      github: "https://github.com/aryanPandey-dev",
-      linkedin: "https://linkedin.com/in/aryan-Pandey-dev",
-      location: "India [Open to Remote & Onsite]"
+      email: "aryanpandey2675@gmail.com",
+      github: "https://github.com/Aryan8892",
+      linkedin: "https://www.linkedin.com/in/aryan-pandey-4b2609402/",
+      location: "Hyderabad, Telangana, India"
     }
   }
 };

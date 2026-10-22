@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Interactive 3D Developer Portfolio
 
 A modern, responsive, high-performance developer portfolio built for a B.Tech Computer Science student applying for Software Development Engineer (SDE) internships and placements.
@@ -68,7 +69,7 @@ MyPortfolio/
 │   │   ├── Navbar.tsx           # Glassmorphism header with active section tracking
 │   │   ├── ProjectModal.tsx     # Deep-dive architecture & features modal
 │   │   ├── ProjectsSection.tsx  # 3D tilt project cards with category filters
-│   │   ├── ResumeSection.tsx    # Resume overview, download, & fast snapshot
+│   │   ├── resumeSection.tsx    # resume overview, download, & fast snapshot
 │   │   └── SkillsSection.tsx    # Categorized skills & Java/DSA spotlight card
 │   ├── data/
 │   │   └── portfolioData.ts     # ⭐️ CENTRAL FILE: All personal & project details
@@ -99,7 +100,7 @@ Update the following keys to match your information:
 | **Education** | `institution` | `"[Your University / Institute Name]"` | Your university/college name |
 | **Education** | `duration` | `"2023 - 2027 (Expected)"` | Your actual enrollment years |
 | **Education** | `cgpaOrGrade` | `"Current CGPA: 8.5 / 10.0"` | Your current CGPA or percentage |
-| **Resume** | `public/resume.pdf` | Built-in placeholder PDF | Replace with your real PDF file named `resume.pdf` |
+| **resume** | `public/resume.pdf` | Built-in placeholder PDF | Replace with your real PDF file named `resume.pdf` |
 
 ---
 
@@ -141,3 +142,7 @@ The contact form includes built-in client validation and simulated instant feedb
    VITE_CONTACT_FORM_ENDPOINT=https://api.web3forms.com/submit
    ```
 3. The form will automatically POST submitted messages to your endpoint.
+=======
+# Protfolio
+🚀 A modern, responsive developer portfolio built with React and Vite, featuring interactive UI, creative animations, project showcases, technical skills, and contact information. Designed to present my development journey and projects professionally for internships and placement opportunities.
+>>>>>>> 9a1c51947c818e29d41adc719fdb489d2102d851

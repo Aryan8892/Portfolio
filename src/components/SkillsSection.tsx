@@ -40,10 +40,10 @@ export const SkillsSection: React.FC = () => {
             <span>Technical Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            Verified Skills &amp; <span className="text-gradient-electric">Core Stack</span>
+            Technical Skills &amp; <span className="text-gradient-electric">Toolsets</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300">
-            A verified repertoire centered on Java, Data Structures &amp; Algorithms, modern web engineering, and fundamental computer science principles.
+            A verified repertoire encompassing frontend development, core programming languages, relational databases, embedded IoT hardware, and AI-assisted workflows.
           </p>
         </div>
 
@@ -101,27 +101,27 @@ export const SkillsSection: React.FC = () => {
               </div>
 
               <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500 font-mono">
-                <span>Verified Foundation</span>
+                <span>Verified in Resume</span>
                 <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400/80" />
               </div>
             </div>
           ))}
         </div>
 
-        {/* Spotlight Card: Java & DSA Engineering Focus */}
+        {/* Spotlight Card: Frontend & Embedded Focus */}
         <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-cyan-950/30 via-slate-900/60 to-violet-950/30 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
             
             <div className="lg:col-span-2">
               <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono uppercase mb-2">
                 <Sparkles className="w-4 h-4" />
-                <span>Specialized Core Focus</span>
+                <span>Specialized Engineering Focus</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                Algorithmic Foundations in Java &amp; Computational Thinking
+                Frontend Engineering &amp; Embedded IoT Systems
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                My approach to software engineering centers around rigorous problem solving. I write clean, modular Java code with strong adherence to Object-Oriented principles, efficient memory utilization, and algorithmic optimizations.
+                Combining responsive web development using React and modern JavaScript with hands-on microcontroller prototyping (Arduino Nano, MQ-3 alcohol sensing, relay actuation). Leveraging AI-assisted tools (Antigravity) to rapidly scaffold and optimize clean architectures.
               </p>
             </div>
 
@@ -129,16 +129,16 @@ export const SkillsSection: React.FC = () => {
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3">
                 <Code2 className="w-5 h-5 text-cyan-400 shrink-0" />
                 <div>
-                  <div className="text-xs font-bold text-white">Object-Oriented Design</div>
-                  <div className="text-[11px] text-slate-400">Encapsulation, Polymorphism, Abstraction</div>
+                  <div className="text-xs font-bold text-white">Frontend &amp; UI Architecture</div>
+                  <div className="text-[11px] text-slate-400">React, HTML5, CSS3, JavaScript</div>
                 </div>
               </div>
 
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3">
                 <Database className="w-5 h-5 text-violet-400 shrink-0" />
                 <div>
-                  <div className="text-xs font-bold text-white">Time &amp; Space Complexity</div>
-                  <div className="text-[11px] text-slate-400">Big-O analysis &amp; scalable structures</div>
+                  <div className="text-xs font-bold text-white">Embedded &amp; Data Logic</div>
+                  <div className="text-[11px] text-slate-400">Arduino, C/C++, SQL, Python</div>
                 </div>
               </div>
             </div>
