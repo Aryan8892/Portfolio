@@ -145,3 +145,23 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Custom Cyberpunk Cursor on fine pointer devices */
+@media (pointer: fine) and (hover: hover) {
+  html.custom-cursor-active,
+  html.custom-cursor-active a,
+  html.custom-cursor-active button,
+  html.custom-cursor-active [role="button"],
+  html.custom-cursor-active .cursor-pointer {
+    cursor: none !important;
+  }
+
+  /* Maintain standard text cursor in text inputs & textareas for accessibility */
+  html.custom-cursor-active input[type="text"],
+  html.custom-cursor-active input[type="email"],
+  html.custom-cursor-active input[type="password"],
+  html.custom-cursor-active textarea {
+    cursor: text !important;
+  }
+}
+
