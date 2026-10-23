@@ -1,38 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  alpha: number;
-  size: number;
-  color: string;
-}
+import React, { useEffect, useRef } from 'react';
 
 export const CustomCursor: React.FC = () => {
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const rippleRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isSupported, setIsSupported] = useState(false);
 
   useEffect(() => {
-    // Only enable custom cursor on fine-pointer (mouse) devices, never on touchscreens
-    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
-    const isHoverSupported = window.matchMedia('(hover: hover)').matches;
-    if (!isFinePointer || !isHoverSupported) {
-      return;
-    }
-
-    setIsSupported(true);
-
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    const ripple = rippleRef.current;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!dot || !ring || !ripple || !canvas) return;
 
-    const ctx = canvas.getContext('2d', { alpha: true });
-    if (!ctx) return;
-
+    const ctx = canvas.getContext('2d');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Track state
+    // Dimensions
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+
+    // State tracking
     let mouseX = -100;
     let mouseY = -100;
     let ringX = -100;
@@ -40,20 +32,25 @@ export const CustomCursor: React.FC = () => {
     let isVisible = false;
     let isHovering = false;
     let isMouseDown = false;
-    let currentRingRadius = 15;
-    let targetRingRadius = 15;
+    let scale = 1;
+    let targetScale = 1;
 
-    let particles: Particle[] = [];
-    let animationFrameId: number;
+    // Trail sparks
+    interface Spark {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      alpha: number;
+      color: string;
+    }
+    const sparks: Spark[] = [];
 
-    const updateCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    updateCanvasSize();
+    // Pointer event handler (works across desktop and touch-enabled hybrid laptops)
+    const onPointerMove = (e: PointerEvent) => {
+      if (e.pointerType === 'touch') return;
 
-    // Mouse movement
-    const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
 
@@ -61,57 +58,65 @@ export const CustomCursor: React.FC = () => {
         isVisible = true;
         ringX = mouseX;
         ringY = mouseY;
+        dot.style.opacity = '1';
+        ring.style.opacity = '1';
+        document.documentElement.classList.add('custom-cursor-active');
       }
 
-      // Spawn subtle trail particle if moving and motion not reduced
-      if (!prefersReducedMotion && Math.random() < 0.45) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 0.8 + 0.2;
+      // Spawn subtle cyber trailing spark
+      if (!prefersReducedMotion && ctx && Math.random() < 0.35) {
         const isCyan = Math.random() > 0.4;
-
-        particles.push({
+        sparks.push({
           x: mouseX,
           y: mouseY,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2,
+          size: Math.random() * 2 + 1,
           alpha: 0.65,
-          size: Math.random() * 2.2 + 1.2,
-          color: isCyan ? '56, 189, 248' : '168, 85, 247',
+          color: isCyan ? '0, 240, 255' : '168, 85, 247',
         });
-
-        // Limit particles pool
-        if (particles.length > 20) {
-          particles.shift();
-        }
+        if (sparks.length > 25) sparks.shift();
       }
     };
 
-    // Detect hover on interactive elements
+    // Detect hover on interactive items
     const onMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      const interactive = target.closest(
-        'a, button, input:not([type="text"]):not([type="email"]):not([type="password"]), select, [role="button"], .cursor-pointer, [data-interactive]'
+      const isText = target.closest(
+        'input[type="text"], input[type="email"], input[type="password"], textarea, [contenteditable="true"]'
       );
 
-      const isText = target.closest('input[type="text"], input[type="email"], textarea, [contenteditable="true"]');
-
       if (isText) {
-        // Hide custom cursor temporarily for native text input caret
-        isVisible = false;
         isHovering = false;
-      } else if (interactive) {
-        isVisible = true;
-        isHovering = true;
-      } else {
-        isVisible = true;
-        isHovering = false;
+        dot.style.opacity = '0';
+        ring.style.opacity = '0';
+        return;
       }
+
+      dot.style.opacity = isVisible ? '1' : '0';
+      ring.style.opacity = isVisible ? '1' : '0';
+
+      const isInteractive = target.closest(
+        'a, button, [role="button"], input, select, .cursor-pointer, [data-interactive], .glass-panel'
+      );
+
+      isHovering = !!isInteractive;
     };
 
     const onMouseDown = () => {
       isMouseDown = true;
+      // Trigger glowing ripple burst
+      ripple.style.transition = 'none';
+      ripple.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(0.6)`;
+      ripple.style.opacity = '0.9';
+
+      requestAnimationFrame(() => {
+        ripple.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease-out';
+        ripple.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(2.4)`;
+        ripple.style.opacity = '0';
+      });
     };
 
     const onMouseUp = () => {
@@ -120,97 +125,87 @@ export const CustomCursor: React.FC = () => {
 
     const onMouseLeave = () => {
       isVisible = false;
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+      ripple.style.opacity = '0';
     };
 
     const onMouseEnter = () => {
       isVisible = true;
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
     };
 
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
     window.addEventListener('mouseover', onMouseOver, { passive: true });
     window.addEventListener('mousedown', onMouseDown, { passive: true });
     window.addEventListener('mouseup', onMouseUp, { passive: true });
-    document.addEventListener('mouseleave', onMouseLeave, { passive: true });
-    document.addEventListener('mouseenter', onMouseEnter, { passive: true });
-    window.addEventListener('resize', updateCanvasSize, { passive: true });
+    document.addEventListener('mouseleave', onMouseLeave);
+    document.addEventListener('mouseenter', onMouseEnter);
 
-    // Enable CSS custom cursor hide on interactive elements while custom cursor is active
-    document.documentElement.classList.add('custom-cursor-active');
+    // 120FPS Hardware-Accelerated Smooth Render Loop
+    let animationFrameId: number;
 
-    // 60FPS Render Loop
     const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       if (isVisible) {
-        // Easing interpolation for the outer ring
-        const lerpFactor = prefersReducedMotion ? 1 : 0.22;
+        // Fast direct dot position (zero latency for instant feel)
+        dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+
+        // Smooth spring lerp for the outer following circle
+        const lerpFactor = prefersReducedMotion ? 1 : 0.16;
         ringX += (mouseX - ringX) * lerpFactor;
         ringY += (mouseY - ringY) * lerpFactor;
 
-        // Radius transition based on state
-        if (isHovering) {
-          targetRingRadius = 26;
-        } else if (isMouseDown) {
-          targetRingRadius = 11;
+        // Target scale based on state
+        if (isMouseDown) {
+          targetScale = 0.75;
+        } else if (isHovering) {
+          targetScale = 1.45;
         } else {
-          targetRingRadius = 16;
+          targetScale = 1.0;
         }
-        currentRingRadius += (targetRingRadius - currentRingRadius) * 0.2;
+        scale += (targetScale - scale) * 0.18;
 
-        // 1. Draw Trailing Particles
-        if (!prefersReducedMotion) {
-          for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            p.alpha -= 0.035;
+        ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(${scale})`;
 
-            if (p.alpha <= 0) {
-              particles.splice(i, 1);
-              continue;
+        // Color & style transition based on hover
+        if (isHovering) {
+          ring.style.borderColor = 'rgba(0, 240, 255, 0.9)';
+          ring.style.backgroundColor = 'rgba(0, 240, 255, 0.08)';
+          ring.style.boxShadow = '0 0 18px rgba(0, 240, 255, 0.45), inset 0 0 10px rgba(168, 85, 247, 0.25)';
+        } else {
+          ring.style.borderColor = 'rgba(56, 189, 248, 0.65)';
+          ring.style.backgroundColor = 'rgba(168, 85, 247, 0.03)';
+          ring.style.boxShadow = '0 0 12px rgba(56, 189, 248, 0.3), inset 0 0 6px rgba(168, 85, 247, 0.15)';
+        }
+
+        // Draw sparks on canvas
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (!prefersReducedMotion && sparks.length > 0) {
+            for (let i = sparks.length - 1; i >= 0; i--) {
+              const s = sparks[i];
+              s.x += s.vx;
+              s.y += s.vy;
+              s.alpha -= 0.035;
+
+              if (s.alpha <= 0) {
+                sparks.splice(i, 1);
+                continue;
+              }
+
+              ctx.beginPath();
+              ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+              ctx.fillStyle = `rgba(${s.color}, ${s.alpha})`;
+              ctx.shadowColor = `rgba(${s.color}, 0.8)`;
+              ctx.shadowBlur = 6;
+              ctx.fill();
             }
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
-            ctx.shadowColor = `rgba(${p.color}, 0.8)`;
-            ctx.shadowBlur = 6;
-            ctx.fill();
           }
         }
-
-        // 2. Draw Outer Purple/Cyan Ring
-        ctx.beginPath();
-        ctx.arc(ringX, ringY, currentRingRadius, 0, Math.PI * 2);
-
-        if (isHovering) {
-          // Interactive expansion state
-          ctx.strokeStyle = 'rgba(56, 189, 248, 0.85)'; // Electric Cyan border
-          ctx.lineWidth = 1.8;
-          ctx.shadowColor = 'rgba(56, 189, 248, 0.6)';
-          ctx.shadowBlur = 10;
-          ctx.fillStyle = 'rgba(168, 85, 247, 0.12)'; // Soft purple glow interior
-          ctx.fill();
-        } else {
-          // Normal idle state: thin neon purple outer ring
-          ctx.strokeStyle = 'rgba(168, 85, 247, 0.75)'; // Cyber Purple
-          ctx.lineWidth = 1.4;
-          ctx.shadowColor = 'rgba(168, 85, 247, 0.45)';
-          ctx.shadowBlur = 7;
-        }
-        ctx.stroke();
-
-        // 3. Draw Inner Glowing Cyan Dot
-        ctx.beginPath();
-        const dotRadius = isHovering ? 2.5 : isMouseDown ? 4.5 : 3.5;
-        ctx.arc(mouseX, mouseY, dotRadius, 0, Math.PI * 2);
-        ctx.fillStyle = '#38bdf8'; // Glowing cyan
-        ctx.shadowColor = '#00e5ff';
-        ctx.shadowBlur = 9;
-        ctx.fill();
-
-        // Reset shadow
-        ctx.shadowBlur = 0;
+      } else if (ctx && sparks.length > 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        sparks.length = 0;
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -220,35 +215,51 @@ export const CustomCursor: React.FC = () => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('mouseover', onMouseOver);
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mouseup', onMouseUp);
       document.removeEventListener('mouseleave', onMouseLeave);
       document.removeEventListener('mouseenter', onMouseEnter);
-      window.removeEventListener('resize', updateCanvasSize);
       document.documentElement.classList.remove('custom-cursor-active');
     };
   }, []);
 
-  if (!isSupported) {
-    return null;
-  }
-
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[99999]"
-      aria-hidden="true"
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        pointerEvents: 'none',
-        zIndex: 99999,
-      }}
-    />
+    <div className="pointer-events-none fixed inset-0 z-[999999] overflow-hidden select-none" aria-hidden="true">
+      {/* Background Trail Sparks Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 w-full h-full"
+      />
+
+      {/* Outer Smoothly-Following Animated Circle */}
+      <div
+        ref={ringRef}
+        className="pointer-events-none absolute top-0 left-0 w-9 h-9 rounded-full border border-cyan-400/70 opacity-0 will-change-transform flex items-center justify-center transition-colors duration-200"
+        style={{
+          boxShadow: '0 0 12px rgba(56, 189, 248, 0.3), inset 0 0 6px rgba(168, 85, 247, 0.15)',
+        }}
+      >
+        {/* Subtle Cyber Reticle Accent Notches */}
+        <div className="absolute inset-0 rounded-full border border-dashed border-violet-400/30 animate-spin [animation-duration:12s]" />
+      </div>
+
+      {/* Click Ripple Effect Ring */}
+      <div
+        ref={rippleRef}
+        className="pointer-events-none absolute top-0 left-0 w-8 h-8 rounded-full border border-cyan-300 opacity-0 will-change-transform"
+        style={{
+          boxShadow: '0 0 14px rgba(0, 240, 255, 0.6)',
+        }}
+      />
+
+      {/* Inner Pinpoint Cursor Dot */}
+      <div
+        ref={dotRef}
+        className="pointer-events-none absolute top-0 left-0 w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-0 will-change-transform shadow-[0_0_8px_#00f0ff]"
+      />
+    </div>
   );
 };

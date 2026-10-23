@@ -13,8 +13,8 @@ export const Hero3DCanvas: React.FC = () => {
 
     // 1. Scene, Camera, Renderer Setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.set(0, 0.2, 5.0);
+    const camera = new THREE.PerspectiveCamera(38, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 0.05, 5.2);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -24,533 +24,459 @@ export const Hero3DCanvas: React.FC = () => {
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.1;
+    renderer.toneMappingExposure = 1.15;
     container.appendChild(renderer.domElement);
 
-    // Main Master Group
+    // Master Group & Character Floating Root
     const masterGroup = new THREE.Group();
     scene.add(masterGroup);
 
-    // Character Floating Root Group
     const characterRoot = new THREE.Group();
-    characterRoot.position.y = -0.15;
+    characterRoot.position.y = -0.06;
     masterGroup.add(characterRoot);
 
     // ==========================================
-    // CYBERPUNK MATERIALS PALETTE
+    // 2. TEXTURE LOADING & CHARACTER RIG
     // ==========================================
-    // Dark Metallic Armor Plating
-    const darkArmorMat = new THREE.MeshStandardMaterial({
-      color: 0x0c101c,
-      roughness: 0.25,
-      metalness: 0.88,
-    });
+    const textureLoader = new THREE.TextureLoader();
 
-    const midArmorMat = new THREE.MeshStandardMaterial({
-      color: 0x1e2638,
-      roughness: 0.35,
-      metalness: 0.75,
-    });
+    // 1) Steady Shoulders & Hoodie Base Texture
+    const shoulderTexture = textureLoader.load('/character_shoulders.png');
+    shoulderTexture.colorSpace = THREE.SRGBColorSpace;
+    shoulderTexture.minFilter = THREE.LinearFilter;
+    shoulderTexture.magFilter = THREE.LinearFilter;
 
-    // Visor Glass
-    const visorMat = new THREE.MeshPhysicalMaterial({
-      color: 0x05070f,
-      roughness: 0.1,
-      metalness: 0.95,
-      transmission: 0.3,
+    // 2) 3D Head & Expressive Face Texture
+    // 2) 3D Head & Expressive Face Base Texture (Original eyes removed with seamless matching skin)
+    const headTexture = textureLoader.load('/character_head_skin.png');
+    headTexture.colorSpace = THREE.SRGBColorSpace;
+    headTexture.minFilter = THREE.LinearFilter;
+    headTexture.magFilter = THREE.LinearFilter;
+
+    // 3) Duplicate Eyes: Open & Blinking Textures (Exact match in size, shape, radius, and appearance)
+    const openLeftTexture = textureLoader.load('/eye_open_left.png');
+    openLeftTexture.colorSpace = THREE.SRGBColorSpace;
+    openLeftTexture.minFilter = THREE.LinearFilter;
+    openLeftTexture.magFilter = THREE.LinearFilter;
+
+    const openRightTexture = textureLoader.load('/eye_open_right.png');
+    openRightTexture.colorSpace = THREE.SRGBColorSpace;
+    openRightTexture.minFilter = THREE.LinearFilter;
+    openRightTexture.magFilter = THREE.LinearFilter;
+
+    const blinkLeftTexture = textureLoader.load('/eye_blink_left.png');
+    blinkLeftTexture.colorSpace = THREE.SRGBColorSpace;
+    blinkLeftTexture.minFilter = THREE.LinearFilter;
+    blinkLeftTexture.magFilter = THREE.LinearFilter;
+
+    const blinkRightTexture = textureLoader.load('/eye_blink_right.png');
+    blinkRightTexture.colorSpace = THREE.SRGBColorSpace;
+    blinkRightTexture.minFilter = THREE.LinearFilter;
+    blinkRightTexture.magFilter = THREE.LinearFilter;
+
+    // --- STEADY SHOULDERS MESH ---
+    // Anchored at base: does NOT rotate with head
+    const shoulderGeo = new THREE.PlaneGeometry(3.9, 3.9, 16, 16);
+    const shoulderMat = new THREE.MeshStandardMaterial({
+      map: shoulderTexture,
       transparent: true,
-      opacity: 0.92,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
+      alphaTest: 0.01,
+      roughness: 0.5,
+      metalness: 0.15,
+      side: THREE.FrontSide,
     });
+    const shoulderMesh = new THREE.Mesh(shoulderGeo, shoulderMat);
+    shoulderMesh.position.set(0, 0, 0);
+    characterRoot.add(shoulderMesh);
 
-    // Glowing Cyan Core & Accents
-    const cyanNeonMat = new THREE.MeshStandardMaterial({
-      color: 0x38bdf8,
-      emissive: 0x00e5ff,
-      emissiveIntensity: 2.2,
-      roughness: 0.2,
-      metalness: 0.5,
-    });
+    // --- 3D SCULPTED VOLUMETRIC HEAD MESH ---
+    // Pivots from the neck: rotates in pitch, yaw, and roll in true 3D
+    const headPivotGroup = new THREE.Group();
+    // Neck base pivot position
+    headPivotGroup.position.set(0, -0.65, 0.08);
+    characterRoot.add(headPivotGroup);
 
-    // Glowing Purple/Violet Accents
-    const purpleNeonMat = new THREE.MeshStandardMaterial({
-      color: 0xa855f7,
-      emissive: 0x9333ea,
-      emissiveIntensity: 2.0,
-      roughness: 0.2,
-      metalness: 0.5,
-    });
+    // Function defining the exact 3D facial contour of the character
+    const getHeadVZ = (vx: number, vy: number): number => {
+      // Face curvature center around (0, 0.25)
+      const dx = vx / 1.45;
+      const dy = (vy - 0.25) / 1.45;
+      const distSq = dx * dx + dy * dy;
 
-    // Eye Pupils Glow Material
-    const eyePupilMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
-    });
+      let vz = 0;
+      if (distSq < 1.0) {
+        // Volumetric curve: nose, mouth, eyes protrude forward
+        vz = (1.0 - distSq) * 0.36;
+      } else {
+        // Ears, temples and back hair curve backward
+        vz = -Math.min(0.25, (distSq - 1.0) * 0.18);
+      }
 
-    const eyeIrisMat = new THREE.MeshBasicMaterial({
-      color: 0xc084fc,
-      wireframe: false,
-    });
+      // Extra 3D facial feature definition around nose and cheeks
+      const noseDist = Math.sqrt(vx * vx * 3.5 + (vy - 0.12) * (vy - 0.12) * 3.0);
+      if (noseDist < 0.65) {
+        vz += (0.65 - noseDist) * 0.24;
+      }
+      return vz;
+    };
 
-    // ==========================================
-    // 2. TORSO & UPPER BODY CHASSIS
-    // ==========================================
-    const torsoGroup = new THREE.Group();
-    characterRoot.add(torsoGroup);
+    // Subdivided 3D volumetric face geometry with sculpted depth
+    const headGeo = new THREE.PlaneGeometry(3.9, 3.9, 64, 64);
+    const pos = headGeo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const vx = pos.getX(i);
+      const vy = pos.getY(i);
+      pos.setZ(i, getHeadVZ(vx, vy));
+    }
+    headGeo.computeVertexNormals();
 
-    // Main Chest Plate (Tapered Cylinder)
-    const chestGeo = new THREE.CylinderGeometry(0.68, 0.44, 0.88, 8);
-    const chestMesh = new THREE.Mesh(chestGeo, darkArmorMat);
-    chestMesh.position.y = 0.05;
-    torsoGroup.add(chestMesh);
-
-    // Collar / Neck Guard Ring
-    const collarGeo = new THREE.TorusGeometry(0.42, 0.06, 12, 32);
-    const collarMesh = new THREE.Mesh(collarGeo, midArmorMat);
-    collarMesh.rotation.x = Math.PI / 2;
-    collarMesh.position.y = 0.52;
-    torsoGroup.add(collarMesh);
-
-    // Collar Accent Neon Light
-    const collarNeonGeo = new THREE.TorusGeometry(0.44, 0.02, 8, 32);
-    const collarNeonMesh = new THREE.Mesh(collarNeonGeo, purpleNeonMat);
-    collarNeonMesh.rotation.x = Math.PI / 2;
-    collarNeonMesh.position.y = 0.52;
-    torsoGroup.add(collarNeonMesh);
-
-    // Arc Reactor / Power Core (Chest Center)
-    const reactorHousingGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.1, 16);
-    const reactorHousing = new THREE.Mesh(reactorHousingGeo, midArmorMat);
-    reactorHousing.rotation.x = Math.PI / 2;
-    reactorHousing.position.set(0, 0.18, 0.52);
-    torsoGroup.add(reactorHousing);
-
-    const reactorCoreGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.12, 16);
-    const reactorCore = new THREE.Mesh(reactorCoreGeo, cyanNeonMat);
-    reactorCore.rotation.x = Math.PI / 2;
-    reactorCore.position.set(0, 0.18, 0.54);
-    torsoGroup.add(reactorCore);
-
-    // Chest Plate Cyber Trim Lines
-    const trimLeftGeo = new THREE.BoxGeometry(0.04, 0.4, 0.04);
-    const trimLeft = new THREE.Mesh(trimLeftGeo, cyanNeonMat);
-    trimLeft.position.set(-0.25, 0.08, 0.48);
-    trimLeft.rotation.z = -0.3;
-    torsoGroup.add(trimLeft);
-
-    const trimRightGeo = new THREE.BoxGeometry(0.04, 0.4, 0.04);
-    const trimRight = new THREE.Mesh(trimRightGeo, cyanNeonMat);
-    trimRight.position.set(0.25, 0.08, 0.48);
-    trimRight.rotation.z = 0.3;
-    torsoGroup.add(trimRight);
-
-    // Shoulder Pauldrons (Left & Right)
-    const shoulderGeo = new THREE.SphereGeometry(0.32, 16, 12);
-    shoulderGeo.scale(1.2, 0.7, 0.9);
-
-    const leftShoulder = new THREE.Mesh(shoulderGeo, darkArmorMat);
-    leftShoulder.position.set(-0.82, 0.32, 0);
-    leftShoulder.rotation.z = 0.35;
-    torsoGroup.add(leftShoulder);
-
-    const leftShoulderStripe = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.025, 8, 24), purpleNeonMat);
-    leftShoulderStripe.position.set(-0.84, 0.33, 0);
-    leftShoulderStripe.rotation.y = Math.PI / 2;
-    torsoGroup.add(leftShoulderStripe);
-
-    const rightShoulder = new THREE.Mesh(shoulderGeo, darkArmorMat);
-    rightShoulder.position.set(0.82, 0.32, 0);
-    rightShoulder.rotation.z = -0.35;
-    torsoGroup.add(rightShoulder);
-
-    const rightShoulderStripe = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.025, 8, 24), purpleNeonMat);
-    rightShoulderStripe.position.set(0.84, 0.33, 0);
-    rightShoulderStripe.rotation.y = Math.PI / 2;
-    torsoGroup.add(rightShoulderStripe);
-
-    // Anti-Gravity Thruster Base (Bottom of Torso)
-    const thrusterBaseGeo = new THREE.CylinderGeometry(0.38, 0.22, 0.28, 16);
-    const thrusterBase = new THREE.Mesh(thrusterBaseGeo, darkArmorMat);
-    thrusterBase.position.y = -0.48;
-    torsoGroup.add(thrusterBase);
-
-    const thrusterRingGeo = new THREE.TorusGeometry(0.32, 0.035, 12, 32);
-    const thrusterRing = new THREE.Mesh(thrusterRingGeo, cyanNeonMat);
-    thrusterRing.rotation.x = Math.PI / 2;
-    thrusterRing.position.y = -0.58;
-    torsoGroup.add(thrusterRing);
-
-    // Thruster Energy Glow Disc
-    const thrusterGlowGeo = new THREE.CylinderGeometry(0.18, 0.02, 0.25, 16);
-    const thrusterGlowMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
+    const headMat = new THREE.MeshStandardMaterial({
+      map: headTexture,
       transparent: true,
-      opacity: 0.65,
+      alphaTest: 0.01,
+      roughness: 0.38,
+      metalness: 0.1,
+      side: THREE.FrontSide,
     });
-    const thrusterGlow = new THREE.Mesh(thrusterGlowGeo, thrusterGlowMat);
-    thrusterGlow.position.y = -0.72;
-    torsoGroup.add(thrusterGlow);
+
+    const headMesh = new THREE.Mesh(headGeo, headMat);
+    // Counter-offset so the head sits naturally on top of the neck pivot
+    headMesh.position.set(0, 0.65, 0);
+    headPivotGroup.add(headMesh);
+
+    // --- DUPLICATE EYE MESHES ---
+    // Helper to generate eye geometries conforming precisely to the 3D head face contour
+    const createEyeGeo = (centerX: number, centerYHead: number) => {
+      const geo = new THREE.PlaneGeometry(0.686, 0.495, 20, 20);
+      const eyePos = geo.attributes.position;
+      const baseHeadZ = getHeadVZ(centerX, centerYHead);
+      for (let i = 0; i < eyePos.count; i++) {
+        const ex = eyePos.getX(i);
+        const ey = eyePos.getY(i);
+        const vx = centerX + ex;
+        const vy = centerYHead + ey;
+        const headSurfaceZ = getHeadVZ(vx, vy);
+
+        // Spherical eyeball/cornea curvature at center
+        const edistSq = (ex / 0.343) ** 2 + (ey / 0.248) ** 2;
+        const bulge = Math.max(0, 1 - edistSq) * 0.018;
+
+        eyePos.setZ(i, (headSurfaceZ - baseHeadZ) + bulge);
+      }
+      geo.computeVertexNormals();
+      return { geo, baseHeadZ };
+    };
+
+    // Eye coordinates relative to head center (width 3.9 covers 1024px)
+    // Left eye center: pixel (412, 545) -> X = -0.381, Y = 0.524 (local head Y = -0.126)
+    // Right eye center: pixel (636, 545) -> X = +0.472, Y = 0.524 (local head Y = -0.126)
+    const leftEye = createEyeGeo(-0.381, -0.126);
+    const rightEye = createEyeGeo(0.472, -0.126);
+
+    // 1) Duplicate Open Eyes (Seamlessly match size, shape, radius, and lighting)
+    const leftOpenMat = new THREE.MeshStandardMaterial({
+      map: openLeftTexture,
+      transparent: true,
+      opacity: 1.0,
+      roughness: 0.38,
+      metalness: 0.1,
+      side: THREE.FrontSide,
+    });
+    const leftOpenMesh = new THREE.Mesh(leftEye.geo, leftOpenMat);
+    leftOpenMesh.position.set(-0.381, 0.524, leftEye.baseHeadZ + 0.006);
+    leftOpenMesh.renderOrder = 1;
+    headPivotGroup.add(leftOpenMesh);
+
+    const rightOpenMat = new THREE.MeshStandardMaterial({
+      map: openRightTexture,
+      transparent: true,
+      opacity: 1.0,
+      roughness: 0.38,
+      metalness: 0.1,
+      side: THREE.FrontSide,
+    });
+    const rightOpenMesh = new THREE.Mesh(rightEye.geo, rightOpenMat);
+    rightOpenMesh.position.set(0.472, 0.524, rightEye.baseHeadZ + 0.006);
+    rightOpenMesh.renderOrder = 1;
+    headPivotGroup.add(rightOpenMesh);
+
+    // 2) Duplicate Blinking Eyes (Smooth eyelid closure over matching skin)
+    const leftBlinkMat = new THREE.MeshStandardMaterial({
+      map: blinkLeftTexture,
+      transparent: true,
+      opacity: 0,
+      depthWrite: false,
+      roughness: 0.38,
+      metalness: 0.1,
+      side: THREE.FrontSide,
+    });
+    const leftBlinkMesh = new THREE.Mesh(leftEye.geo.clone(), leftBlinkMat);
+    leftBlinkMesh.position.set(-0.381, 0.524, leftEye.baseHeadZ + 0.008);
+    leftBlinkMesh.visible = false;
+    leftBlinkMesh.renderOrder = 2;
+    headPivotGroup.add(leftBlinkMesh);
+
+    const rightBlinkMat = new THREE.MeshStandardMaterial({
+      map: blinkRightTexture,
+      transparent: true,
+      opacity: 0,
+      depthWrite: false,
+      roughness: 0.38,
+      metalness: 0.1,
+      side: THREE.FrontSide,
+    });
+    const rightBlinkMesh = new THREE.Mesh(rightEye.geo.clone(), rightBlinkMat);
+    rightBlinkMesh.position.set(0.472, 0.524, rightEye.baseHeadZ + 0.008);
+    rightBlinkMesh.visible = false;
+    rightBlinkMesh.renderOrder = 2;
+    headPivotGroup.add(rightBlinkMesh);
 
     // ==========================================
-    // 3. HEAD & EXPRESSIVE VISOR / EYES
+    // 3. CYBERPUNK 3D LIGHTING & HOLOGRAPHIC ACCENTS
     // ==========================================
-    const neckJoint = new THREE.Group();
-    neckJoint.position.set(0, 0.6, 0);
-    characterRoot.add(neckJoint);
+    const ambientLight = new THREE.AmbientLight(0x182030, 1.3);
+    scene.add(ambientLight);
 
-    const headGroup = new THREE.Group();
-    neckJoint.add(headGroup);
+    const cyanPointLight = new THREE.PointLight(0x00f0ff, 3.5, 12);
+    cyanPointLight.position.set(-2.6, 1.4, 2.2);
+    scene.add(cyanPointLight);
 
-    // Main Helmet Dome
-    const helmetGeo = new THREE.SphereGeometry(0.64, 24, 20);
-    helmetGeo.scale(0.96, 1.05, 1.02);
-    const helmetMesh = new THREE.Mesh(helmetGeo, darkArmorMat);
-    headGroup.add(helmetMesh);
+    const purplePointLight = new THREE.PointLight(0xa855f7, 3.2, 12);
+    purplePointLight.position.set(2.6, 1.2, 2.0);
+    scene.add(purplePointLight);
 
-    // Curved Dark Visor Faceplate
-    const visorGeo = new THREE.SphereGeometry(0.58, 24, 18, 0, Math.PI);
-    visorGeo.scale(0.94, 0.85, 0.98);
-    const visorMesh = new THREE.Mesh(visorGeo, visorMat);
-    visorMesh.position.set(0, 0.02, 0.12);
-    visorMesh.rotation.y = -Math.PI / 2;
-    headGroup.add(visorMesh);
+    const frontKeyLight = new THREE.DirectionalLight(0xffffff, 0.85);
+    frontKeyLight.position.set(0, 1.8, 4.2);
+    scene.add(frontKeyLight);
 
-    // Visor Bezel / Brow Trim
-    const browGeo = new THREE.BoxGeometry(0.85, 0.06, 0.25);
-    const browMesh = new THREE.Mesh(browGeo, midArmorMat);
-    browMesh.position.set(0, 0.36, 0.44);
-    headGroup.add(browMesh);
+    // Holographic Cyber Rings Behind Character
+    const ringGroup = new THREE.Group();
+    ringGroup.position.set(0, 0.05, -0.35);
+    characterRoot.add(ringGroup);
 
-    // Forehead Neural Crest / Cyber Sensor
-    const crestGeo = new THREE.BoxGeometry(0.16, 0.34, 0.28);
-    const crestMesh = new THREE.Mesh(crestGeo, cyanNeonMat);
-    crestMesh.position.set(0, 0.52, 0.22);
-    crestMesh.rotation.x = -0.35;
-    headGroup.add(crestMesh);
-
-    // Side Cyber Ears / Audio Sensors
-    const earGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.12, 16);
-    const leftEar = new THREE.Mesh(earGeo, midArmorMat);
-    leftEar.rotation.z = Math.PI / 2;
-    leftEar.position.set(-0.64, 0.08, 0);
-    headGroup.add(leftEar);
-
-    const leftEarRing = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.025, 8, 20), purpleNeonMat);
-    leftEarRing.rotation.y = Math.PI / 2;
-    leftEarRing.position.set(-0.71, 0.08, 0);
-    headGroup.add(leftEarRing);
-
-    const rightEar = new THREE.Mesh(earGeo, midArmorMat);
-    rightEar.rotation.z = Math.PI / 2;
-    rightEar.position.set(0.64, 0.08, 0);
-    headGroup.add(rightEar);
-
-    const rightEarRing = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.025, 8, 20), purpleNeonMat);
-    rightEarRing.rotation.y = Math.PI / 2;
-    rightEarRing.position.set(0.71, 0.08, 0);
-    headGroup.add(rightEarRing);
-
-    // Dual Cyber Antennas
-    const antennaGeo = new THREE.CylinderGeometry(0.02, 0.035, 0.45, 8);
-    const leftAntenna = new THREE.Mesh(antennaGeo, midArmorMat);
-    leftAntenna.position.set(-0.52, 0.58, -0.05);
-    leftAntenna.rotation.z = 0.4;
-    leftAntenna.rotation.x = -0.2;
-    headGroup.add(leftAntenna);
-
-    const leftTip = new THREE.Mesh(new THREE.SphereGeometry(0.045, 10, 10), purpleNeonMat);
-    leftTip.position.set(-0.62, 0.78, -0.09);
-    headGroup.add(leftTip);
-
-    const rightAntenna = new THREE.Mesh(antennaGeo, midArmorMat);
-    rightAntenna.position.set(0.52, 0.58, -0.05);
-    rightAntenna.rotation.z = -0.4;
-    rightAntenna.rotation.x = -0.2;
-    headGroup.add(rightAntenna);
-
-    const rightTip = new THREE.Mesh(new THREE.SphereGeometry(0.045, 10, 10), purpleNeonMat);
-    rightTip.position.set(0.62, 0.78, -0.09);
-    headGroup.add(rightTip);
-
-    // ==========================================
-    // 4. EXPRESSIVE EYES GROUP (TRACKS CURSOR)
-    // ==========================================
-    const eyesGroup = new THREE.Group();
-    eyesGroup.position.set(0, 0.08, 0.54);
-    headGroup.add(eyesGroup);
-
-    // Left Eye Capsule (Digital Glowing Visor Pupil)
-    const eyePupilGeo = new THREE.CapsuleGeometry
-      ? new THREE.CapsuleGeometry(0.065, 0.12, 8, 16)
-      : new THREE.CylinderGeometry(0.065, 0.065, 0.16, 16);
-
-    const leftPupil = new THREE.Mesh(eyePupilGeo, eyePupilMat);
-    leftPupil.rotation.z = Math.PI / 2;
-    leftPupil.position.set(-0.21, 0, 0);
-    eyesGroup.add(leftPupil);
-
-    const leftIrisRing = new THREE.Mesh(new THREE.TorusGeometry(0.12, 0.015, 8, 20), eyeIrisMat);
-    leftIrisRing.position.set(-0.21, 0, -0.01);
-    eyesGroup.add(leftIrisRing);
-
-    // Right Eye Capsule
-    const rightPupil = new THREE.Mesh(eyePupilGeo, eyePupilMat);
-    rightPupil.rotation.z = Math.PI / 2;
-    rightPupil.position.set(0.21, 0, 0);
-    eyesGroup.add(rightPupil);
-
-    const rightIrisRing = new THREE.Mesh(new THREE.TorusGeometry(0.12, 0.015, 8, 20), eyeIrisMat);
-    rightIrisRing.position.set(0.21, 0, -0.01);
-    eyesGroup.add(rightIrisRing);
-
-    // Expressive Brow Indicators (LED Slits)
-    const leftBrowGeo = new THREE.BoxGeometry(0.18, 0.02, 0.02);
-    const leftBrow = new THREE.Mesh(leftBrowGeo, cyanNeonMat);
-    leftBrow.position.set(-0.21, 0.16, 0);
-    leftBrow.rotation.z = 0.1;
-    eyesGroup.add(leftBrow);
-
-    const rightBrowGeo = new THREE.BoxGeometry(0.18, 0.02, 0.02);
-    const rightBrow = new THREE.Mesh(rightBrowGeo, cyanNeonMat);
-    rightBrow.position.set(0.21, 0.16, 0);
-    rightBrow.rotation.z = -0.1;
-    eyesGroup.add(rightBrow);
-
-    // ==========================================
-    // 5. FLOATING ORBITAL ENERGY RINGS & PARTICLES
-    // ==========================================
-    const haloGroup = new THREE.Group();
-    masterGroup.add(haloGroup);
-
-    // Outer Segmented Planetary Ring
-    const halo1Geo = new THREE.TorusGeometry(1.7, 0.014, 12, 80);
-    const halo1Mat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
+    const ringGeo1 = new THREE.RingGeometry(1.85, 1.88, 64);
+    const ringMat1 = new THREE.MeshBasicMaterial({
+      color: 0x00f0ff,
       transparent: true,
       opacity: 0.35,
+      side: THREE.DoubleSide,
     });
-    const halo1 = new THREE.Mesh(halo1Geo, halo1Mat);
-    halo1.rotation.x = Math.PI / 3;
-    haloGroup.add(halo1);
+    const ringMesh1 = new THREE.Mesh(ringGeo1, ringMat1);
+    ringGroup.add(ringMesh1);
 
-    const halo2Geo = new THREE.TorusGeometry(1.95, 0.012, 12, 80);
-    const halo2Mat = new THREE.MeshBasicMaterial({
+    const ringGeo2 = new THREE.RingGeometry(1.95, 1.97, 64);
+    const ringMat2 = new THREE.MeshBasicMaterial({
       color: 0xa855f7,
       transparent: true,
       opacity: 0.25,
+      side: THREE.DoubleSide,
     });
-    const halo2 = new THREE.Mesh(halo2Geo, halo2Mat);
-    halo2.rotation.x = -Math.PI / 4;
-    halo2.rotation.y = Math.PI / 5;
-    haloGroup.add(halo2);
+    const ringMesh2 = new THREE.Mesh(ringGeo2, ringMat2);
+    ringGroup.add(ringMesh2);
 
-    // Ambient Cyber Particles
-    const particleCount = 100;
-    const particleGeometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-
-    const colCyan = new THREE.Color(0x38bdf8);
-    const colPurple = new THREE.Color(0xa855f7);
+    // 3D Orbiting Floating Particles
+    const particleCount = 65;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    const particleColors = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3;
-      const radius = 1.6 + Math.random() * 2.2;
       const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
+      const rad = 1.4 + Math.random() * 1.5;
+      particlePositions[i * 3] = Math.cos(theta) * rad;
+      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 3.2;
+      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 2.0 - 0.1;
 
-      positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta) + 0.1;
-      positions[i3 + 2] = radius * Math.cos(phi);
-
-      const mixed = colCyan.clone().lerp(colPurple, Math.random());
-      colors[i3] = mixed.r;
-      colors[i3 + 1] = mixed.g;
-      colors[i3 + 2] = mixed.b;
+      if (Math.random() > 0.5) {
+        particleColors[i * 3] = 0.0;
+        particleColors[i * 3 + 1] = 0.94;
+        particleColors[i * 3 + 2] = 1.0;
+      } else {
+        particleColors[i * 3] = 0.66;
+        particleColors[i * 3 + 1] = 0.33;
+        particleColors[i * 3 + 2] = 0.97;
+      }
     }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
 
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    const particleMaterial = new THREE.PointsMaterial({
-      size: 0.035,
+    const particleMat = new THREE.PointsMaterial({
+      size: 0.045,
       vertexColors: true,
       transparent: true,
       opacity: 0.65,
       blending: THREE.AdditiveBlending,
     });
-    const particles = new THREE.Points(particleGeometry, particleMaterial);
-    haloGroup.add(particles);
+    const particles = new THREE.Points(particleGeo, particleMat);
+    characterRoot.add(particles);
 
     // ==========================================
-    // 6. SCENE LIGHTING
-    // ==========================================
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
-    scene.add(ambientLight);
-
-    const mainCyanLight = new THREE.PointLight(0x38bdf8, 5.0, 12);
-    mainCyanLight.position.set(2.5, 3.0, 3.5);
-    scene.add(mainCyanLight);
-
-    const fillPurpleLight = new THREE.PointLight(0xa855f7, 5.5, 12);
-    fillPurpleLight.position.set(-2.8, -1.5, 2.5);
-    scene.add(fillPurpleLight);
-
-    const rimLight = new THREE.DirectionalLight(0x818cf8, 2.0);
-    rimLight.position.set(0, 4, -3);
-    scene.add(rimLight);
-
-    // ==========================================
-    // 7. INTERACTIVE CURSOR TRACKING STATE
+    // 4. FULL-SCREEN MOUSE TRACKING
     // ==========================================
     let mouseX = 0;
     let mouseY = 0;
     let targetMouseX = 0;
     let targetMouseY = 0;
-    let isMouseActive = false;
-    let mouseTimeoutId: number;
+    let isHovering = false;
 
-    const onPointerMove = (event: MouseEvent) => {
-      isMouseActive = true;
-      window.clearTimeout(mouseTimeoutId);
+    const onPointerMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const charCenterX = rect.left + rect.width / 2;
+      const charCenterY = rect.top + rect.height / 2;
 
-      // Calculate normalized coordinates relative to hero center
-      const heroEl = document.getElementById('hero');
-      if (heroEl) {
-        const rect = heroEl.getBoundingClientRect();
-        const heroCenterX = rect.left + rect.width / 2;
-        const heroCenterY = rect.top + rect.height / 2;
+      // Track cursor position across the entire application screen relative to character
+      const dx = (e.clientX - charCenterX) / (window.innerWidth * 0.5);
+      const dy = -(e.clientY - charCenterY) / (window.innerHeight * 0.5);
 
-        targetMouseX = Math.max(-1, Math.min(1, (event.clientX - heroCenterX) / (rect.width * 0.45)));
-        targetMouseY = Math.max(-1, Math.min(1, (event.clientY - heroCenterY) / (rect.height * 0.45)));
-      } else {
-        targetMouseX = Math.max(-1, Math.min(1, (event.clientX - window.innerWidth / 2) / (window.innerWidth * 0.5)));
-        targetMouseY = Math.max(-1, Math.min(1, (event.clientY - window.innerHeight / 2) / (window.innerHeight * 0.5)));
-      }
+      targetMouseX = THREE.MathUtils.clamp(dx, -1.0, 1.0);
+      targetMouseY = THREE.MathUtils.clamp(dy, -1.0, 1.0);
 
-      // Smooth decay back to idle when mouse stops for 3.5 seconds
-      mouseTimeoutId = window.setTimeout(() => {
-        isMouseActive = false;
-      }, 3500);
+      isHovering =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
     };
 
     const onPointerLeave = () => {
-      isMouseActive = false;
+      isHovering = false;
       targetMouseX = 0;
       targetMouseY = 0;
     };
 
     window.addEventListener('mousemove', onPointerMove, { passive: true });
-    window.addEventListener('mouseleave', onPointerLeave, { passive: true });
+    document.addEventListener('mouseleave', onPointerLeave);
+    window.addEventListener('blur', onPointerLeave);
 
-    // Handle Window Resize
+    // Resize Handler
     const handleResize = () => {
       if (!container) return;
-      camera.aspect = container.clientWidth / container.clientHeight;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
-
     window.addEventListener('resize', handleResize);
 
     // ==========================================
-    // 8. ANIMATION LOOP WITH NATURAL DAMPING
+    // 5. NATURAL BLINKING STATE DYNAMICS
     // ==========================================
-    let animationFrameId: number;
-    const clock = new THREE.Clock();
-
-    // Eye blink state
-    let lastBlinkTime = 0;
     let isBlinking = false;
-    let eyeScaleY = 1.0;
+    let blinkStartTime = 0;
+    const blinkDuration = 160; // ms: natural human eye blink duration
+    let nextBlinkTime = performance.now() + 2500 + Math.random() * 2500;
+
+    // ==========================================
+    // 6. MAIN ANIMATION LOOP
+    // ==========================================
+    const clock = new THREE.Clock();
+    let animationFrameId: number;
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
       const elapsedTime = clock.getElapsedTime();
 
-      // Smoothly interpolate current mouse tracking towards target
-      if (isMouseActive) {
-        mouseX += (targetMouseX - mouseX) * 0.08;
-        mouseY += (targetMouseY - mouseY) * 0.08;
-      } else {
-        // Natural idle look-around cycle when idle or on mobile
-        const idleScanX = Math.sin(elapsedTime * 0.75) * 0.22 + Math.cos(elapsedTime * 0.3) * 0.1;
-        const idleScanY = Math.sin(elapsedTime * 0.6) * 0.12;
-        mouseX += (idleScanX - mouseX) * 0.03;
-        mouseY += (idleScanY - mouseY) * 0.03;
-      }
+      // Smooth cursor lerp
+      mouseX += (targetMouseX - mouseX) * 0.085;
+      mouseY += (targetMouseY - mouseY) * 0.085;
 
-      // Natural Eye Blink Cycle (Every ~4 seconds)
-      if (elapsedTime - lastBlinkTime > 3.8 + Math.sin(elapsedTime) * 1.2) {
+      // ==========================================
+      // 7. TRUE 3D HEAD ROTATION (SHOULDERS REMAIN STEADY)
+      // ==========================================
+      // The head pivots from the neck base to track cursor smoothly
+      const targetHeadYaw = THREE.MathUtils.clamp(mouseX * 0.42, -0.38, 0.38);
+      const targetHeadPitch = THREE.MathUtils.clamp(-mouseY * 0.28, -0.22, 0.22);
+      const targetHeadRoll = THREE.MathUtils.clamp(-mouseX * 0.10, -0.08, 0.08);
+
+      headPivotGroup.rotation.y += (targetHeadYaw - headPivotGroup.rotation.y) * 0.085;
+      headPivotGroup.rotation.x += (targetHeadPitch - headPivotGroup.rotation.x) * 0.085;
+      headPivotGroup.rotation.z += (targetHeadRoll - headPivotGroup.rotation.z) * 0.085;
+
+      // Notice: shoulderMesh is NOT rotated by mouse! Shoulders stay completely steady!
+
+      // ==========================================
+      // 8. NATURAL DUPLICATE EYE BLINKING ANIMATION
+      // ==========================================
+      const now = performance.now();
+      if (!isBlinking && now >= nextBlinkTime) {
         isBlinking = true;
-        lastBlinkTime = elapsedTime;
+        blinkStartTime = now;
       }
 
       if (isBlinking) {
-        eyeScaleY -= 0.25;
-        if (eyeScaleY <= 0.08) {
+        const elapsed = now - blinkStartTime;
+        if (elapsed >= blinkDuration) {
           isBlinking = false;
+          // Restore open eyes
+          leftOpenMat.opacity = 1.0;
+          rightOpenMat.opacity = 1.0;
+          leftOpenMesh.scale.y = 1.0;
+          rightOpenMesh.scale.y = 1.0;
+
+          // Hide closed eyelids
+          leftBlinkMat.opacity = 0;
+          rightBlinkMat.opacity = 0;
+          leftBlinkMesh.visible = false;
+          rightBlinkMesh.visible = false;
+
+          // Next blink timing (18% chance of rapid natural double-blink)
+          const isDoubleBlink = Math.random() < 0.18;
+          nextBlinkTime = now + (isDoubleBlink ? 120 + Math.random() * 80 : 2800 + Math.random() * 2600);
+        } else {
+          const progress = elapsed / blinkDuration;
+          const factor = Math.sin(progress * Math.PI); // 0 -> 1 -> 0
+          
+          // Eyelid closes smoothly over eye
+          const blinkOpacity = Math.min(1.0, factor * 2.2);
+          leftBlinkMat.opacity = blinkOpacity;
+          rightBlinkMat.opacity = blinkOpacity;
+          leftBlinkMesh.visible = true;
+          rightBlinkMesh.visible = true;
+
+          // Natural vertical eyelid sweep
+          const blinkScaleY = 0.35 + factor * 0.65;
+          leftBlinkMesh.scale.y = blinkScaleY;
+          rightBlinkMesh.scale.y = blinkScaleY;
+
+          // Open eye naturally compresses and softens during blink
+          const openScaleY = Math.max(0.08, 1.0 - factor * 0.92);
+          leftOpenMesh.scale.y = openScaleY;
+          rightOpenMesh.scale.y = openScaleY;
+          leftOpenMat.opacity = Math.max(0.0, 1.0 - factor * 1.5);
+          rightOpenMat.opacity = Math.max(0.0, 1.0 - factor * 1.5);
         }
-      } else if (eyeScaleY < 1.0) {
-        eyeScaleY += 0.22;
-        if (eyeScaleY > 1.0) eyeScaleY = 1.0;
+      } else {
+        leftOpenMat.opacity = 1.0;
+        rightOpenMat.opacity = 1.0;
+        leftOpenMesh.scale.y = 1.0;
+        rightOpenMesh.scale.y = 1.0;
+        leftBlinkMesh.visible = false;
+        rightBlinkMesh.visible = false;
       }
 
-      eyesGroup.scale.y = eyeScaleY;
-
-      // 1. Visor Pupils Follow Cursor (Micro-tracking with limits)
-      const pupilX = THREE.MathUtils.clamp(mouseX * 0.09, -0.075, 0.075);
-      const pupilY = THREE.MathUtils.clamp(-mouseY * 0.065, -0.05, 0.05);
-      eyesGroup.position.x += (pupilX - eyesGroup.position.x) * 0.15;
-      eyesGroup.position.y += (0.08 + pupilY - eyesGroup.position.y) * 0.15;
-
-      // Dynamic Brow Expressions
-      leftBrow.rotation.z = 0.08 + mouseX * 0.08;
-      rightBrow.rotation.z = -0.08 + mouseX * 0.08;
-
-      // 2. Head Tracking with Realistic Clamping
-      const targetHeadYaw = THREE.MathUtils.clamp(mouseX * 0.42, -0.38, 0.38);
-      const targetHeadPitch = THREE.MathUtils.clamp(-mouseY * 0.30, -0.25, 0.25);
-      const targetHeadRoll = THREE.MathUtils.clamp(-mouseX * 0.12, -0.1, 0.1);
-
-      headGroup.rotation.y += (targetHeadYaw - headGroup.rotation.y) * 0.07;
-      headGroup.rotation.x += (targetHeadPitch - headGroup.rotation.x) * 0.07;
-      headGroup.rotation.z += (targetHeadRoll - headGroup.rotation.z) * 0.07;
-
-      // 3. Torso & Upper Body Coordinated Movement (Gentle Drag)
-      const targetTorsoYaw = targetHeadYaw * 0.35;
-      const targetTorsoPitch = targetHeadPitch * 0.22;
-      const targetTorsoRoll = targetHeadRoll * 0.4;
-
-      torsoGroup.rotation.y += (targetTorsoYaw - torsoGroup.rotation.y) * 0.045;
-      torsoGroup.rotation.x += (targetTorsoPitch - torsoGroup.rotation.x) * 0.045;
-      torsoGroup.rotation.z += (targetTorsoRoll - torsoGroup.rotation.z) * 0.045;
-
-      // 4. Idle Floating & Breathing Motion
+      // ==========================================
+      // 9. IDLE FLOATING & SUBTLE BREATHING
+      // ==========================================
       if (!prefersReducedMotion) {
-        // Anti-gravity levitation float
-        characterRoot.position.y = -0.15 + Math.sin(elapsedTime * 1.8) * 0.09;
-        characterRoot.position.x = Math.sin(elapsedTime * 0.9) * 0.025;
+        // Gentle anti-gravity float
+        characterRoot.position.y = -0.06 + Math.sin(elapsedTime * 1.5) * 0.04;
 
-        // Subtle Chest Breathing
-        const breatheScale = 1.0 + Math.sin(elapsedTime * 2.2) * 0.015;
-        chestMesh.scale.set(breatheScale, 1.0, breatheScale);
+        // Very subtle breathing scale on shoulders (anchored, no rotation)
+        const breathe = 1.0 + Math.sin(elapsedTime * 2.0) * 0.008;
+        shoulderMesh.scale.set(1.0, breathe, 1.0);
 
-        // Reactor Core & Thruster Energy Pulsing
-        const pulse = 1.8 + Math.sin(elapsedTime * 3.5) * 0.6;
-        reactorCore.material.emissiveIntensity = pulse;
-        thrusterGlow.scale.set(1 + Math.sin(elapsedTime * 6.0) * 0.08, 1 + Math.sin(elapsedTime * 8.0) * 0.15, 1);
+        // Rotate Holographic Rings
+        ringMesh1.rotation.z = elapsedTime * 0.12;
+        ringMesh2.rotation.z = -elapsedTime * 0.16;
+        particles.rotation.y = elapsedTime * 0.06;
 
-        // Orbital Halo Rings Rotation
-        halo1.rotation.z = elapsedTime * 0.14;
-        halo2.rotation.z = -elapsedTime * 0.18;
-        particles.rotation.y = elapsedTime * 0.05;
+        // Dynamic 3D lighting responds to head angle
+        cyanPointLight.intensity = (isHovering ? 3.8 : 3.2) + (mouseX < 0 ? Math.abs(mouseX) * 1.6 : 0);
+        purplePointLight.intensity = (isHovering ? 3.5 : 2.9) + (mouseX > 0 ? mouseX * 1.6 : 0);
       }
-
-      // Master subtle parallax
-      masterGroup.rotation.y += (mouseX * 0.1 - masterGroup.rotation.y) * 0.04;
-      masterGroup.rotation.x += (-mouseY * 0.08 - masterGroup.rotation.x) * 0.04;
 
       renderer.render(scene, camera);
     };
@@ -558,16 +484,15 @@ export const Hero3DCanvas: React.FC = () => {
     animate();
 
     // ==========================================
-    // 9. CLEANUP RESOURCES
+    // 10. CLEANUP RESOURCES
     // ==========================================
     return () => {
       window.removeEventListener('mousemove', onPointerMove);
-      window.removeEventListener('mouseleave', onPointerLeave);
+      document.removeEventListener('mouseleave', onPointerLeave);
+      window.removeEventListener('blur', onPointerLeave);
       window.removeEventListener('resize', handleResize);
-      window.clearTimeout(mouseTimeoutId);
       cancelAnimationFrame(animationFrameId);
 
-      // Traverse and dispose geometries & materials
       scene.traverse((obj) => {
         if (obj instanceof THREE.Mesh || obj instanceof THREE.Points) {
           obj.geometry?.dispose();
@@ -579,6 +504,12 @@ export const Hero3DCanvas: React.FC = () => {
         }
       });
 
+      shoulderTexture.dispose();
+      headTexture.dispose();
+      openLeftTexture.dispose();
+      openRightTexture.dispose();
+      blinkLeftTexture.dispose();
+      blinkRightTexture.dispose();
       renderer.dispose();
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
