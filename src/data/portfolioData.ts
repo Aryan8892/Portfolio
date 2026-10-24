@@ -1,3 +1,11 @@
+export interface ArchitectureNode {
+  step: string;
+  label: string;
+  component: string;
+  description: string;
+  type: 'input' | 'process' | 'logic' | 'output';
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -10,6 +18,7 @@ export interface Project {
   tags: string[];
   features: string[];
   architectureOverview: string;
+  architectureFlow?: ArchitectureNode[];
   metricsOrOutcome?: string;
   githubUrl: string;
   liveUrl?: string;
@@ -53,10 +62,10 @@ export const PORTFOLIO_DATA = {
     resumeUrl: "/resume.pdf",
     resumeLastUpdated: "Updated from Official Resume",
     stats: [
-      { label: "Verified Projects", value: "3" },
-      { label: "B.Tech Present CGPA", value: "8.1" },
-      { label: "Specialization", value: "Data Science" },
-      { label: "Diploma CGPA", value: "7.8" },
+      { label: "Projects Built", value: "3+" },
+      { label: "Tech Skills", value: "5+" },
+      { label: "Core Interest", value: "Software Developer" },
+      { label: "For Internship", value: "Available" },
     ]
   },
 
@@ -70,23 +79,23 @@ export const PORTFOLIO_DATA = {
         description: "Designing responsive, intuitive user interfaces using React, JavaScript, HTML5, and CSS with role-oriented workflows."
       },
       {
-        title: "Embedded Systems & IoT",
-        description: "Hands-on experience developing Arduino-based safety prototypes, sensor integration (MQ-3), and relay cutoff mechanisms."
-      },
-      {
         title: "AI-Assisted Workflows",
         description: "Leveraging cutting-edge AI-assisted developer tooling (Antigravity) to rapidly scaffold, refine, and troubleshoot application components."
       },
       {
         title: "Core Programming & Data",
         description: "Proficient foundations in Java, Python, C/C++, R, and relational database management (SQL, MySQL)."
+      },
+      {
+        title: "Embedded Systems & IoT",
+        description: "Hands-on experience developing Arduino-based safety prototypes, sensor integration (MQ-3), and relay cutoff mechanisms."
       }
     ],
     technicalHighlights: [
-      "B.Tech in CSE (Data Science) with an 8.1 present CGPA at St. Peter's Engineering College, Hyderabad",
-      "Diploma in Electronics & Communication Engineering (7.8 CGPA) from Government Polytechnic, Mahabubnagar",
-      "Developed an Arduino-based Alcohol Sensing Alert System with vehicle ignition cutoff",
-      "Engineered full web platforms: VetCare (Pet Care Management) and CivicTrust (Grievance Portal)"
+      "Problem-Solving Skills : Applying logical thinking, data structures, and algorithm to solve coding challenges efficiently.",
+      "Tachnical Expertise : Working with Java, Python, web technologies, and database management to build practical solution.",
+      "Real-World Projects : Developing practical applications that slove problem through software, automation and data-driven approaches.",
+      "Continuous Learning : Exploring emerging technologies, improving coding skills, and learning new tools to build better applications."
     ]
   },
 
@@ -158,6 +167,36 @@ export const PORTFOLIO_DATA = {
         "Explored safety features including emergency override and fail-safe operation to improve system reliability"
       ],
       architectureOverview: "Analog MQ-3 sensor readings are continuously sampled and processed by the Arduino Nano microcontroller. If the reading crosses the safety threshold, GPIO signals actuate a high-power relay module to cut off the engine ignition circuit while triggering driver warnings.",
+      architectureFlow: [
+        {
+          step: "01",
+          label: "Vapor Ingestion",
+          component: "MQ-3 Gas Sensor",
+          description: "Continuously captures and measures ambient alcohol vapor concentrations inside vehicle cabin.",
+          type: "input"
+        },
+        {
+          step: "02",
+          label: "ADC Sampling",
+          component: "Arduino Nano (ATmega328P)",
+          description: "10-bit internal ADC converts analog voltage and checks against calibrated safety threshold.",
+          type: "process"
+        },
+        {
+          step: "03",
+          label: "Safety Interlock",
+          component: "Electromechanical Relay",
+          description: "GPIO actuates the relay to instantly break the 12V ignition line, preventing engine crank.",
+          type: "logic"
+        },
+        {
+          step: "04",
+          label: "Driver Feedback",
+          component: "Piezo Buzzer & LED",
+          description: "Triggers immediate audible alarm and visual warning alert with fail-safe status logging.",
+          type: "output"
+        }
+      ],
       metricsOrOutcome: "Reliable threshold-triggered cutoff mechanism demonstrated in prototype testing for automotive safety compliance.",
       githubUrl: "https://github.com/Aryan8892/Alcohol-Sensing-Alert-System",
       isPrototypeOrHardware: true
@@ -180,9 +219,38 @@ export const PORTFOLIO_DATA = {
         "Used AI-assisted development tools (Antigravity) to generate, refine components, troubleshoot issues, and optimize workflow"
       ],
       architectureOverview: "Modular React application featuring role-separated views for pet parents and veterinarians, managing dynamic state transitions for appointment workflows and digital pet medical history cards.",
+      architectureFlow: [
+        {
+          step: "01",
+          label: "Role-Based UI",
+          component: "React 18 + Tailwind",
+          description: "Dual-portal interface separating customer views (pet owners) from veterinary clinic admins.",
+          type: "input"
+        },
+        {
+          step: "02",
+          label: "Workflow Router",
+          component: "Client State & Routing",
+          description: "Manages session role switching, navigation guardrails, and responsive mobile-first layouts.",
+          type: "process"
+        },
+        {
+          step: "03",
+          label: "Booking Engine",
+          component: "Appointment Lifecycle",
+          description: "Coordinates slot reservation, conflict validation, and status transitions (Pending -> Confirmed).",
+          type: "logic"
+        },
+        {
+          step: "04",
+          label: "Health Record Hub",
+          component: "Medical Profile Store",
+          description: "Centralizes digital vaccination records, dietary instructions, and emergency contact metadata.",
+          type: "output"
+        }
+      ],
       metricsOrOutcome: "Smooth user experience with responsive layout for both clinic administrative desks and mobile pet owners.",
       githubUrl: "https://github.com/Aryan8892/VetCare-Management-System",
-      liveUrl: "https://vetcare-demo.example.com",
       isPrototypeOrHardware: false
     },
     {
@@ -203,9 +271,38 @@ export const PORTFOLIO_DATA = {
         "Used AI-assisted development tools (Antigravity) to generate, refine interface components, and accelerate debugging"
       ],
       architectureOverview: "Role-oriented frontend architecture implemented in React with distinct access portals for citizens, municipal department officers, and executive supervisors, ensuring clear ticket routing and transparency.",
+      architectureFlow: [
+        {
+          step: "01",
+          label: "Grievance Intake",
+          component: "Citizen Submission Portal",
+          description: "Structured incident intake form with department category tagging, ward selection, and evidence upload.",
+          type: "input"
+        },
+        {
+          step: "02",
+          label: "Ticket Generation",
+          component: "Automated Routing Engine",
+          description: "Generates unique encrypted ticket tracking ID, assigns SLA timeline, and dispatches to ward officer.",
+          type: "process"
+        },
+        {
+          step: "03",
+          label: "Action Dashboard",
+          component: "Department Officer Portal",
+          description: "Field team triage board for updating investigation notes, dispatching field crew, and resolving tickets.",
+          type: "logic"
+        },
+        {
+          step: "04",
+          label: "Public Audit & SLA",
+          component: "Transparency Tracker",
+          description: "Real-time citizen progress bar, resolution verification sign-off, and municipal response metrics.",
+          type: "output"
+        }
+      ],
       metricsOrOutcome: "Organized multi-tier grievance pipeline facilitating transparent status updates and departmental issue assignment.",
       githubUrl: "https://github.com/Aryan8892/CivicTrust-Complaint-Portal",
-      liveUrl: "https://civictrust-demo.example.com",
       isPrototypeOrHardware: false
     }
   ] as Project[],

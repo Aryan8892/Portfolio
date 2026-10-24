@@ -154,7 +154,7 @@ export const SkillsSection: React.FC = () => {
                 </div>
 
                 <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                  Frontend Engineering &amp; Embedded IoT Systems
+                  FullStack Developer &amp; Embedded IoT Systems
                 </h3>
 
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -172,10 +172,10 @@ export const SkillsSection: React.FC = () => {
                     <Code2 className="w-5 h-5 text-cyan-400 shrink-0" />
                     <div>
                       <div className="text-xs font-bold text-white">
-                        Frontend &amp; UI Architecture
+                        Frontend(UI Architecture) &amp; Backend
                       </div>
                       <div className="text-[11px] text-slate-400">
-                        React, HTML5, CSS3, JavaScript
+                        React, HTML5, CSS3, JavaScript, SQL, Git & GitHub
                       </div>
                     </div>
                   </div>

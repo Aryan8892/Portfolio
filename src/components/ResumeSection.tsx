@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
-import { FileText, Download, Eye, CheckCircle2, Sparkles, Mail } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { FileText, Download, Eye, CheckCircle2, Sparkles, Mail, X } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 export const ResumeSection: React.FC = () => {
   const { personal, projects, education } = PORTFOLIO_DATA;
   const [showPreviewModal, setShowPreviewModal] = useState(false);
+
+  useEffect(() => {
+    if (!showPreviewModal) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowPreviewModal(false);
+    };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showPreviewModal]);
 
   return (
     <section id="resume" className="py-14 sm:py-16 relative overflow-hidden bg-[#07080d]/70 w-full">
@@ -120,68 +136,72 @@ export const ResumeSection: React.FC = () => {
       </div>
 
       {/* Quick Summary Modal */}
-      {showPreviewModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
-          onClick={() => setShowPreviewModal(false)}
-        >
+      {showPreviewModal &&
+        createPortal(
           <div
-            className="glass-panel w-full max-w-2xl max-h-[85vh] rounded-2xl border border-cyan-500/30 overflow-y-auto p-6 sm:p-8 bg-[#0b0e1a] text-left space-y-6"
-            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+            onClick={() => setShowPreviewModal(false)}
           >
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
-              <div>
-                <h3 className="text-xl font-bold text-white">resume Fast Snapshot</h3>
-                <p className="text-xs text-slate-400 font-mono">Curated summary for hiring managers</p>
+            <div
+              className="glass-panel w-full max-w-2xl max-h-[88vh] rounded-2xl border border-cyan-500/30 overflow-y-auto p-6 sm:p-8 bg-[#090b14] text-left space-y-6 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div>
+                  <h3 className="text-xl font-bold text-white">Resume Fast Snapshot</h3>
+                  <p className="text-xs text-slate-400 font-mono">Curated summary for hiring reviews</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowPreviewModal(false)}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                  aria-label="Close summary modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowPreviewModal(false)}
-                className="px-3 py-1 rounded-lg text-xs font-mono bg-white/5 hover:bg-white/10 text-slate-300 cursor-pointer"
-              >
-                Close
-              </button>
+
+              <div className="space-y-4 text-sm text-slate-300">
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="text-xs font-mono text-cyan-400 font-bold uppercase mb-1">Candidate Profile</div>
+                  <div className="text-white font-semibold">{personal.name}</div>
+                  <div className="text-xs text-slate-400">{personal.roleHeadline} &bull; {personal.location}</div>
+                  <p className="text-xs mt-2 text-slate-300">{personal.shortBio}</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="text-xs font-mono text-violet-400 font-bold uppercase mb-2">Verified Projects Highlight</div>
+                  {projects.map((p) => (
+                    <div key={p.id} className="mb-2 last:mb-0">
+                      <span className="text-white font-medium text-xs">&bull; {p.title}:</span>{' '}
+                      <span className="text-xs text-slate-400">{p.shortDescription}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="text-xs font-mono text-emerald-400 font-bold uppercase mb-2">Education</div>
+                  <div className="text-white font-medium text-xs">{education[0].degree} - {education[0].specialization}</div>
+                  <div className="text-xs text-slate-400">{education[0].institution} &bull; {education[0].duration} ({education[0].cgpaOrGrade})</div>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+                <a
+                  href={personal.resumeUrl}
+                  download="Aryan_Pandey_resume.pdf"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white text-xs font-semibold shadow-md shadow-cyan-500/20 transition-all cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download Official PDF</span>
+                </a>
+              </div>
             </div>
-
-            <div className="space-y-4 text-sm text-slate-300">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-xs font-mono text-cyan-400 font-bold uppercase mb-1">Candidate Profile</div>
-                <div className="text-white font-semibold">{personal.name}</div>
-                <div className="text-xs text-slate-400">{personal.roleHeadline} &bull; {personal.location}</div>
-                <p className="text-xs mt-2 text-slate-300">{personal.shortBio}</p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-xs font-mono text-violet-400 font-bold uppercase mb-2">Verified Projects Highlight</div>
-                {projects.map((p) => (
-                  <div key={p.id} className="mb-2 last:mb-0">
-                    <span className="text-white font-medium text-xs">&bull; {p.title}:</span>{' '}
-                    <span className="text-xs text-slate-400">{p.shortDescription}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-xs font-mono text-emerald-400 font-bold uppercase mb-2">Education</div>
-                <div className="text-white font-medium text-xs">{education[0].degree} - {education[0].specialization}</div>
-                <div className="text-xs text-slate-400">{education[0].institution} &bull; {education[0].duration}</div>
-              </div>
-            </div>
-
-            <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
-              <a
-                href={personal.resumeUrl}
-                download="Aryan_Pandey_resume.pdf"
-                className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold"
-              >
-                Download PDF Document
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </section>
   );
 };
